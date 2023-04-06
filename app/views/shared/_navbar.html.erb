@@ -11,10 +11,9 @@ style="background-color: #efecec;">
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <% if user_signed_in? %>
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="#">Home</a>
-        <a class="nav-link" href="#">Features</a>
-        <a class="nav-link" href="#">Pricing</a>
-        <a class="nav-link disabled">Disabled</a>
+        <%= link_to "Action", "#", class:"nav-link active" %>
+        <%= link_to "Another action", "#", class:"nav-link active" %>
+        <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class:"nav-link active" %>
       </div>
     <% else %>
       <div class="navbar-nav">
