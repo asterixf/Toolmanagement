@@ -1,6 +1,7 @@
 <div class="container my-3">
-  <h2>Log in</h2>
-  <div class="col-6">
+  <h2 class="text-center">Log in</h2>
+  <div class="col-6 mx-auto border border-secondary-subtle
+    shadow p-5 mb-5 bg-body-tertiary rounded">
     <%= simple_form_for(resource, as: resource_name, url: session_path(resource_name), data: { turbo: :false }) do |f| %>
       <div class="form-inputs">
         <%= f.input :email,
@@ -17,7 +18,9 @@
         <%= f.button :submit, "Log in" ,class:"btn btn-secondary mb-3"%>
       </div>
     <% end %>
+      <%= link_to new_registration_path(resource_name) do %>
+       <p> Sign up <i class="fa-solid fa-arrow-right"></i></p>
+      <% end %>
+      <%= link_to "Forgot your password?", new_password_path(resource_name), class:"my-4"%>
   </div>
-
-  <%= render "devise/shared/links"%>
 </div>

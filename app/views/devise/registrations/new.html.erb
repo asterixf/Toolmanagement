@@ -1,6 +1,7 @@
 <div class="container my-3">
-  <h2>Sign up</h2>
-    <div class="col-6">
+  <h2 class="text-center">Sign up</h2>
+    <div class="col-6 mx-auto border border-secondary-subtle
+    shadow p-5 mb-5 bg-body-tertiary rounded">
       <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), data: { turbo: :false }) do |f| %>
         <%= f.error_notification %>
 
@@ -22,6 +23,8 @@
           <%= f.button :submit, "Sign up", class:"btn btn-secondary mb-3" %>
         </div>
       <% end %>
-      <%= render "devise/shared/links" %>
+      <%= link_to new_session_path(resource_name) do %>
+        <p>Log In <i class="fa-solid fa-arrow-right"></i></p>
+      <% end %>
     </div>
 </div>
