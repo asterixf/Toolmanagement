@@ -6,6 +6,28 @@
         <%= f.error_notification %>
 
         <div class="form-inputs">
+          <%= f.input :name,
+                      required: true,
+                      autofocus: true,
+                      input_html: { autocomplete: "name" }%>
+          <%= f.input :lastname,
+                      required: true,
+                      autofocus: true,
+                      label: "Last Name",
+                      input_html: { autocomplete: "last name" }%>
+          <%= f.input :plant,
+                      required: true,
+                      collection: [ "Cuautla","UK", "Spain", "India" ]
+                      %>
+          <%= f.input :department,
+                      required: true,
+                      collection: [ "Operator", "Tooling", "Engineering","Production", "Quality", "SCM", "Marketing", "Growtth", "Finance","Management" ]
+                      %>
+          <%= f.input :position,
+                      required: true,
+                      autofocus: true,
+                      hint: ("e.g. Ing. de Procesos, Operador, etc"),
+                      input_html: { autocomplete: "position" }%>
           <%= f.input :email,
                       required: true,
                       autofocus: true,
