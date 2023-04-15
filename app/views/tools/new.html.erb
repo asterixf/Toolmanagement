@@ -1,0 +1,19 @@
+<div class="container my-3">
+  <h1 class="text-center">New Tool</h1>
+  <div class="mx-auto border border-secondary-subtle
+      shadow p-5 mb-5 bg-body-tertiary rounded col-8">
+    <%= simple_form_for @tool do |f| %>
+        <%= f.input :alias, required: true %>
+        <%= f.input :sap, required: true  %>
+        <%= f.input :technology, reuired: true  %>
+        <%= f.input :bu, required: true  %>
+        <%= f.input :volume, required: true  %>
+        <%= f.input :segment, required: true, hint: 'LR 1000 to 9,900 / MR 10,000 to 39,900 / HR 40,000+',
+        collection: ['HR', 'MR', 'LR']%>
+        <%= f.input :customer, required: true  %>
+        <%= f.input :capacity, required: true%>
+        <%= f.input :spares, required: true  %>
+        <%= f.button :submit, class:"btn btn-secondary mb-3" %>
+    <% end %>
+  </div>
+</div>
