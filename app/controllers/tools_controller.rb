@@ -36,7 +36,7 @@ class ToolsController < ApplicationController
 
   def tool_params
     params.require(:tool).permit(:alias, :sap, :capacity, :technology, :bu, :volume,
-      :customer, :capacity, :spares, :segment)
+      :customer, :capacity, :spares, :segment, :layout)
   end
 
   def set_active

@@ -13,6 +13,7 @@
         <%= f.input :customer, required: true  %>
         <%= f.input :capacity, required: true%>
         <%= f.input :spares, required: true  %>
+        <%= f.input :layout, as: :file , hint: 'PDF file'%>
         <%= f.button :submit, class:"btn btn-secondary mb-3" %>
     <% end %>
   </div>

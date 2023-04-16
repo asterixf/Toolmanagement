@@ -131,6 +131,17 @@
             <%= @tool.available %>%
           </td>
         </tr>
+          <td class="fw-bold">
+           Layout
+          </td>
+          <td>
+            <% if @tool.layout.present? %>
+            <%= link_to "attachment", @tool.layout , :target => "_blank" %>
+            <% else %>
+            No_layout_attached
+            <% end %>
+          </td>
+        </tr>
       </table>
   </div>
 </div>
