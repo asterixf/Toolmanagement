@@ -1,6 +1,11 @@
 class ToolsController < ApplicationController
   def index
     @tools = Tool.all
+    @average_availability = @tools.average(:available)
+      respond_to do |format|
+        format.html
+        format.csv { send_data @tools.to_csv, filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
+      end
   end
 
   def show
@@ -13,7 +18,7 @@ class ToolsController < ApplicationController
 
   def create
     @tool = Tool.new(tool_params)
-    @tool.last_updated_by =  "#{current_user.name } #{current_user.lastname }"
+    @tool.last_updated_by = "#{current_user.name} #{current_user.lastname}"
     @tool.damaged = 0
     @tool.blocked = 0
     set_active

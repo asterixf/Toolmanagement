@@ -1,3 +1,136 @@
 <div class="container my-3">
-<%= @tool.sap %>
+  <div class="mx-auto border border-secondary-subtle
+      shadow p-5 mb-5 bg-body-tertiary rounded">
+      <h1 class="text-center">Tool Info</h1>
+      <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+        <tr>
+          <td class="fw-bold">
+           ID
+          </td>
+          <td>
+            <%= @tool.id %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Alias
+          </td>
+          <td>
+            <%= @tool.alias %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           SAP
+          </td>
+          <td>
+            <%= @tool.sap %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Plant
+          </td>
+          <td>
+            <%= @tool.plant %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           BU
+          </td>
+          <td>
+            <%= @tool.bu %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Technology
+          </td>
+          <td>
+            <%= @tool.technology %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Volume
+          </td>
+          <td>
+            <%= @tool.volume %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Customer
+          </td>
+          <td>
+            <%= @tool.customer %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Capacity
+          </td>
+          <td>
+            <%= @tool.capacity %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Location
+          </td>
+          <td>
+            <%= @tool.location %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Damaged
+          </td>
+          <td>
+            <%= @tool.damaged %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Blocked
+          </td>
+          <td>
+            <%= @tool.blocked %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Active
+          </td>
+          <td>
+            <%= @tool.active %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Spare
+          </td>
+          <td>
+            <%= @tool.spares %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Secment
+          </td>
+          <td>
+            <%= @tool.segment %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
+           Available
+          </td>
+          <td>
+            <%= @tool.available %>%
+          </td>
+        </tr>
+      </table>
+  </div>
 </div>
