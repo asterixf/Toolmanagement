@@ -14,6 +14,8 @@ class Tool < ApplicationRecord
     presence: true
   )
   validates :sap, uniqueness: true
+  has_one_attached :layout
+  # validates :layout, content_type: ['application/pdf']
 
   def self.to_csv
     # Select the attributes that are needed in csv
