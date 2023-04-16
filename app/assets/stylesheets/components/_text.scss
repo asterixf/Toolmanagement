@@ -1,9 +1,14 @@
 a {
 text-decoration: none !important;
-color: black !important;
+// color: black !important;
 }
 
 .link-blue {
   color: blue !important;
   text-decoration: underline !important;
+}
+
+th {
+  background-color: rgb(16, 16, 143) !important;
+  color: white !important;
 }
