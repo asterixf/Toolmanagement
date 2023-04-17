@@ -1,6 +1,13 @@
 require 'csv'
 
 class Tool < ApplicationRecord
+  include PgSearch::Model
+  pg_search_scope :search_by_params,
+      against: [:alias, :sap, :customer, :location, :bu, :segment],
+      using: {
+      tsearch: { prefix: true }
+    }
+
   validates(
     :alias,
     :sap,
@@ -16,18 +23,6 @@ class Tool < ApplicationRecord
   validates :sap, uniqueness: true
   has_one_attached :layout
   validate :layout_mime_type
-
-  def self.to_csv
-    # Select the attributes that are needed in csv
-    attribs = [:id, :alias, :sap, :plant, :bu, :technology, :volume, :customer, :capacity, :location, :damaged, :blocked, :active, :spares, :segment, :available]
-  # iterate over all the passed products and one by one create row of the csv
-    CSV.generate(headers: true) do |csv|
-      csv << attribs
-      all.each do |product|
-      csv << attribs.map{ |attr| product.send(attr) }
-      end
-    end
-  end
 
   private
 

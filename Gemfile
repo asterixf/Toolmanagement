@@ -64,6 +64,8 @@ gem "cloudinary"
 
 gem 'mime-types'
 
+gem "pg_search"
+
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
