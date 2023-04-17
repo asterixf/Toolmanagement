@@ -1,4 +1,8 @@
 .scroll-container {
   overflow-x: scroll;
-  height: 100vh;
+  height: 100%;
+}
+
+.form-alert {
+  background-color: #ea8686 !important;
 }

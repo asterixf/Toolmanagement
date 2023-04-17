@@ -10,6 +10,7 @@
         <tr>
           <th>Id</th>
           <th>Alias</th>
+          <th>Layout</th>
           <th>SAP</th>
           <th>Plant</th>
           <th>BU</th>
@@ -36,6 +37,15 @@
       <% end %>
       </td>
       <td><%= tool.sap %></td>
+      <td class="text-center">
+        <% if tool.layout.present?%>
+          <%= link_to tool.layout , :target => "_blank" do %>
+            <i class="fa-sharp fa-solid fa-paperclip" style="color: #005eff;"></i>
+          <% end %>
+          <% else %>
+            <i class="fa-solid fa-ban" style="color: #989aa0;"></i>
+        <% end %>
+      </td>
       <td><%= tool.plant%></td>
       <td><%= tool.bu %></td>
       <td><%= tool.technology %></td>

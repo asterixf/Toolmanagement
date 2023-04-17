@@ -32,11 +32,25 @@ class ToolsController < ApplicationController
     end
   end
 
+  def edit
+    @tool = Tool.find(params[:id])
+  end
+
+  def update
+    @tool = Tool.find(params[:id])
+    params[:tool][:active] = params[:tool][:capacity]
+    if @tool.update(tool_params)
+      redirect_to tool_path(@tool)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def tool_params
     params.require(:tool).permit(:alias, :sap, :capacity, :technology, :bu, :volume,
-      :customer, :capacity, :spares, :segment, :layout)
+                                 :customer, :capacity, :spares, :segment, :layout, :active)
   end
 
   def set_active
