@@ -136,12 +136,15 @@
           </td>
           <td>
             <% if @tool.layout.present? %>
-            <%= link_to "attachment", @tool.layout , :target => "_blank" %>
+              <%= link_to @tool.layout , :target => "_blank" do %>
+                <i class="fa-sharp fa-solid fa-paperclip" style="color: #005eff;"></i>
+              <% end %>
             <% else %>
-            No_layout_attached
+              No_layout_attached
             <% end %>
           </td>
         </tr>
       </table>
+      <%= link_to "Edit", edit_tool_path(@tool), class: "btn btn-secondary" %>
   </div>
 </div>

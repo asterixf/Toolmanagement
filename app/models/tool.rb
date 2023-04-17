@@ -15,7 +15,7 @@ class Tool < ApplicationRecord
   )
   validates :sap, uniqueness: true
   has_one_attached :layout
-  # validates :layout, content_type: ['application/pdf']
+  validate :layout_mime_type
 
   def self.to_csv
     # Select the attributes that are needed in csv
@@ -26,6 +26,16 @@ class Tool < ApplicationRecord
       all.each do |product|
       csv << attribs.map{ |attr| product.send(attr) }
       end
+    end
+  end
+
+  private
+
+  def layout_mime_type
+    return unless layout.attached?
+
+    if layout.attached? && !layout.content_type.in?(%w(application/pdf))
+      errors.add(:layout, 'must be a PDF')
     end
   end
 end
