@@ -1,11 +1,15 @@
 class ToolsController < ApplicationController
   def index
-    @tools = Tool.all
+    if params[:query].present?
+      @tools = Tool.search_by_params(params[:query])
+    else
+      @tools = Tool.all
+    end
     @average_availability = @tools.average(:available)
-      respond_to do |format|
-        format.html
-        format.csv { send_data @tools.to_csv, filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
-      end
+    respond_to do |format|
+      format.html
+      format.csv { send_data to_csv(@tools), filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
+    end
   end
 
   def show
@@ -56,6 +60,19 @@ class ToolsController < ApplicationController
   def set_active
     if @tool.capacity
       @tool.active = @tool.capacity
+    end
+  end
+
+  def to_csv(tools)
+  # Select the attributes that are needed in csv
+    attribs = [:id, :alias, :sap, :plant, :bu, :technology, :volume, :customer, :capacity, :location, :damaged, :blocked, :active, :spares, :segment, :available]
+    # iterate over all the passed tools and one by one create row of the csv
+    CSV.generate(headers: true) do |csv|
+      csv << attribs
+      # iterate over the filtered tools and add them to the csv
+      tools.each do |tool|
+        csv << attribs.map{ |attr| tool.send(attr) }
+      end
     end
   end
 end
