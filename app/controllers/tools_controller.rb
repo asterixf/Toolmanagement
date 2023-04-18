@@ -64,12 +64,10 @@ class ToolsController < ApplicationController
   end
 
   def to_csv(tools)
-  # Select the attributes that are needed in csv
-    attribs = [:id, :alias, :sap, :plant, :bu, :technology, :volume, :customer, :capacity, :location, :damaged, :blocked, :active, :spares, :segment, :available]
-    # iterate over all the passed tools and one by one create row of the csv
+    attribs = [:id, :alias, :sap, :plant, :bu, :technology, :volume, :customer,
+               :capacity, :location, :damaged, :blocked, :active, :spares, :segment, :available]
     CSV.generate(headers: true) do |csv|
       csv << attribs
-      # iterate over the filtered tools and add them to the csv
       tools.each do |tool|
         csv << attribs.map{ |attr| tool.send(attr) }
       end
