@@ -7,7 +7,7 @@ class Tool < ApplicationRecord
       using: {
       tsearch: { prefix: true }
     }
-
+  has_many :wash_orders
   validates(
     :alias,
     :sap,
