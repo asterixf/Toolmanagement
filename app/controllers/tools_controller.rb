@@ -14,6 +14,8 @@ class ToolsController < ApplicationController
 
   def show
     @tool = Tool.find(params[:id])
+    @cavity = Cavity.new
+    @cavities = @tool.cavities
   end
 
   def new

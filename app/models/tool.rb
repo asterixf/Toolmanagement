@@ -8,6 +8,7 @@ class Tool < ApplicationRecord
       tsearch: { prefix: true }
       }
   has_many :wash_orders
+  has_many :cavities
   validates(
     :alias,
     :sap,
