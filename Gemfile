@@ -62,7 +62,7 @@ end
 #used for attachment hosting
 gem "cloudinary"
 
-gem 'mime-types'
+gem "mime-types"
 
 gem "pg_search"
 
