@@ -1,1 +1,12 @@
-<h1>New Wash Order</h1>
+<div class="container my-3">
+  <h1 class="text-center">New Wash_Order</h1>
+  <div class="mx-auto border border-secondary-subtle
+      shadow p-5 mb-5 bg-body-tertiary rounded col-8">
+    <%= simple_form_for @wash_order do |f| %>
+        <%= f.association :tool, label_method: :alias, require: true %>
+        <%= f.input :qty, label:"Cavities qty", require: true %>
+        <%= f.input :comments, require: true %>
+        <%= f.button :submit, class:"btn btn-secondary mb-3" %>
+    <% end %>
+  </div>
+</div>

@@ -5,5 +5,6 @@ class PagesController < ApplicationController
   end
 
   def dashboard
+    @average_availability = Tool.all.average(:available)
   end
 end

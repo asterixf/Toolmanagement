@@ -1,5 +1,4 @@
-<div class="navbar navbar-expand-lg bg-body-tertiary py-0 navbar-lewagon"
-style="background-color: #efecec;">
+<div class="navbar navbar-expand-lg bg-dark py-0 navbar-lewagon">
   <div class="container-fluid">
     <%= link_to "/", class:"navbar-brand" do %>
     <%= image_tag "Logo_Freudenberg",
@@ -11,9 +10,9 @@ style="background-color: #efecec;">
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
     <% if user_signed_in? %>
       <div class="navbar-nav">
+        <%= link_to "Dashboard", dashboard_path , class:"nav-link active" %>
         <%= link_to "Tools", tools_path, class:"nav-link active" %>
         <%= link_to "New_Tool", new_tool_path, class:"nav-link active" %>
-        <%= link_to "Another action", "#", class:"nav-link active" %>
         <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class:"nav-link active" %>
       </div>
     <% else %>
