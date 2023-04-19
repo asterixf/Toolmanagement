@@ -6,7 +6,7 @@ class Tool < ApplicationRecord
       against: [:alias, :sap, :customer, :location, :bu, :segment],
       using: {
       tsearch: { prefix: true }
-    }
+      }
   has_many :wash_orders
   validates(
     :alias,

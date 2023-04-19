@@ -1,3 +1,30 @@
 <div class="container my-3">
-<h1>dashboard</h1>
+    <div class="my-3">
+      <%= link_to new_wash_order_path, class:"btn btn-primary" do %>
+        <i class="fa-solid fa-hand-sparkles"></i> New_wash_order
+      <% end %>
+      <%= link_to "#", class:"btn btn-primary" do %>
+        <i class="fa-sharp fa-solid fa-file-invoice"></i> Report_damage
+      <% end %>
+    </div>
+    <div class="cards my-5">
+      <div class="card-category row text-center mx-1">
+        <div class="col align-self-center">
+        <h1><%= @average_availability %>%</h1>
+         <p>Your text here</p>
+         </div>
+      </div>
+     <div class="card-category row text-center mx-1">
+        <div class="col align-self-center">
+        <h1><%= @average_availability %>%</h1>
+         <p>Your text here</p>
+         </div>
+      </div>
+     <div class="card-category row text-center mx-1">
+        <div class="col align-self-center">
+        <h1><%= @average_availability %>%</h1>
+         <p>Your text here</p>
+         </div>
+      </div>
+    </div>
 </div>
