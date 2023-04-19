@@ -1,8 +1,8 @@
 <div class="container my-3">
-  <h1 class="text-center">New Tool</h1>
+  <h1 class="text-center fw-bold">New Tool</h1>
   <div class="registration-form">
     <%= simple_form_for @tool do |f| %>
-        <%= f.input :alias, inline_label: 'Alias' , required: true %>
+        <%= f.input :alias, inline_label:'Alias' , required: true %>
         <%= f.input :sap, required: true  %>
         <%= f.input :technology, reuired: true  %>
         <%= f.input :bu, required: true  %>
@@ -11,7 +11,6 @@
         collection: ['HR', 'MR', 'LR']%>
         <%= f.input :customer, required: true  %>
         <%= f.input :capacity, required: true, label:"Cavities Capacity"%>
-        <%= f.input :spares, required: true  %>
         <%= f.input :layout, as: :file , hint: 'PDF file'%>
         <%= f.button :submit, class:"btn btn-primary mb-3" %>
     <% end %>

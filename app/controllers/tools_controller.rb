@@ -22,15 +22,9 @@ class ToolsController < ApplicationController
 
   def create
     @tool = Tool.new(tool_params)
-    @tool.last_updated_by = "#{current_user.name} #{current_user.lastname}"
-    @tool.damaged = 0
-    @tool.blocked = 0
-    set_active
-    @tool.available = 100
-    @tool.plant = current_user.plant
-    @tool.location = "stored"
+    set_tool_values
     if @tool.save
-      redirect_to tools_path
+      redirect_to tool_path(@tool)
     else
       render :new, status: :unprocessable_entity
     end
@@ -54,13 +48,19 @@ class ToolsController < ApplicationController
 
   def tool_params
     params.require(:tool).permit(:alias, :sap, :capacity, :technology, :bu, :volume,
-                                 :customer, :capacity, :spares, :segment, :layout, :active)
+                                 :customer, :capacity, :segment, :layout)
   end
 
-  def set_active
-    if @tool.capacity
-      @tool.active = @tool.capacity
-    end
+  def set_tool_values
+    @tool.created_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
+    @tool.last_updated_by = @tool.created_by
+    @tool.active = 0
+    @tool.damaged = 0
+    @tool.blocked = 0
+    @tool.spares = 0
+    @tool.available = 100
+    @tool.plant = current_user.plant
+    @tool.location = "stored"
   end
 
   def to_csv(tools)
