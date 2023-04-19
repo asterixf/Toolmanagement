@@ -17,63 +17,69 @@
   <%= link_to "Export Tools CSV", tools_path(format: :csv), class:"btn btn-secondary btn-sm align-self-end" %>
 </div>
   <div class="scroll-container rounded-4 bg-light">
-    <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
-      <thead>
+    <% if @tools.empty? %>
+      <div class="d-flex justify-content-center">
+        <h3 class="text-center">No tools found</h3>
+      </div>
+    <% else %>
+      <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Alias</th>
+            <th>SAP</th>
+            <th>Layout</th>
+            <th>Plant</th>
+            <th>BU</th>
+            <th>Technology</th>
+            <th>Volume</th>
+            <th>Customer</th>
+            <th>Capacity</th>
+            <th>Location</th>
+            <th>Damaged</th>
+            <th>Blocked</th>
+            <th>Active</th>
+            <th>Spare</th>
+            <th>Segment</th>
+            <th>Available %</th>
+          </tr>
+        </thead>
+        <tbody>
+        <% @tools.each do |tool| %>
         <tr>
-          <th>Id</th>
-          <th>Alias</th>
-          <th>SAP</th>
-          <th>Layout</th>
-          <th>Plant</th>
-          <th>BU</th>
-          <th>Technology</th>
-          <th>Volume</th>
-          <th>Customer</th>
-          <th>Capacity</th>
-          <th>Location</th>
-          <th>Damaged</th>
-          <th>Blocked</th>
-          <th>Active</th>
-          <th>Spare</th>
-          <th>Segment</th>
-          <th>Available %</th>
-        </tr>
-      </thead>
-      <tbody>
-      <% @tools.each do |tool| %>
-      <tr>
-      <td><%= tool.id %></td>
-      <td>
-      <%= link_to tool_path(tool), class:"link-blue" do %>
-      <%= tool.alias %>
-      <% end %>
-      </td>
-      <td><%= tool.sap %></td>
-      <td class="text-center">
-        <% if tool.layout.present?%>
-          <%= link_to tool.layout , :target => "_blank" do %>
-            <i class="fa-sharp fa-solid fa-paperclip" style="color: #005eff;"></i>
-          <% end %>
-          <% else %>
-            <i class="fa-solid fa-ban" style="color: #989aa0;"></i>
+        <td><%= tool.id %></td>
+        <td>
+        <%= link_to tool_path(tool), class:"link-blue" do %>
+        <%= tool.alias %>
         <% end %>
-      </td>
-      <td><%= tool.plant%></td>
-      <td><%= tool.bu %></td>
-      <td><%= tool.technology %></td>
-      <td><%= tool.volume %></td>
-      <td><%= tool.customer %></td>
-      <td><%= tool.capacity %></td>
-      <td><%= tool.location %></td>
-      <td><%= tool.damaged %></td>
-      <td><%= tool.blocked %></td>
-      <td><%= tool.active %></td>
-      <td><%= tool.spares %></td>
-      <td><%= tool.segment %></td>
-      <td><%= tool.available %>%</td>
-      </tr>
-      <% end %>
-      </tbody>
-    </table>
+        </td>
+        <td><%= tool.sap %></td>
+        <td class="text-center">
+          <% if tool.layout.present?%>
+            <%= link_to tool.layout , :target => "_blank" do %>
+              <i class="fa-sharp fa-solid fa-paperclip" style="color: #005eff;"></i>
+            <% end %>
+            <% else %>
+              <i class="fa-solid fa-ban" style="color: #989aa0;"></i>
+          <% end %>
+        </td>
+        <td><%= tool.plant%></td>
+        <td><%= tool.bu %></td>
+        <td><%= tool.technology %></td>
+        <td><%= tool.volume %></td>
+        <td><%= tool.customer %></td>
+        <td><%= tool.capacity %></td>
+        <td><%= tool.location %></td>
+        <td><%= tool.damaged %></td>
+        <td><%= tool.blocked %></td>
+        <td><%= tool.active %></td>
+        <td><%= tool.spares %></td>
+        <td><%= tool.segment %></td>
+        <td><%= tool.available %>%</td>
+        </tr>
+        <% end %>
+        </tbody>
+      </table>
+    <% end %>
   </div>
 </div>
