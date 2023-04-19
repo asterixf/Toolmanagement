@@ -17,6 +17,9 @@ class Tool < ApplicationRecord
     :bu,
     :volume,
     :customer,
+    :damaged,
+    :blocked,
+    :active,
     :spares,
     presence: true
   )

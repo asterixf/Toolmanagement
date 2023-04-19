@@ -11,9 +11,9 @@
       <% end %>
     </div>
   </div>
-<div class="d-flex justify-content-between align-items-center mb-2">
-  <h3 class="mb-0 align-self-end">Availability <%= @average_availability %></h3>
-  <h1 class="mx-auto mb-0">Tools</h1>
+<div class="d-flex justify-content-between mb-2">
+  <h1 calss="fw-bold">Tools</h1>
+  <h3 class="mb-0 align-self-end fw-bold">Availability <%= @average_availability.round(2) %>%</h3>
   <%= link_to "Export Tools CSV", tools_path(format: :csv), class:"btn btn-secondary btn-sm align-self-end" %>
 </div>
   <div class="scroll-container rounded-4 bg-light">
