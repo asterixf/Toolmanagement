@@ -8,21 +8,21 @@
       <% end %>
     </div>
     <div class="cards my-5">
-      <div class="card-category row text-center mx-1">
+      <div class="card-category row text-center mx-1 bg-danger">
         <div class="col align-self-center">
-        <h1><%= @average_availability %>%</h1>
+        <h1><%= @average_availability.round(2) %>%</h1>
+         <p class="fw-bold">General Availability</p>
+         </div>
+      </div>
+     <div class="card-category row text-center mx-1">
+        <div class="col align-self-center">
+        <h1><%= @average_availability.round(2) %>%</h1>
          <p>Your text here</p>
          </div>
       </div>
      <div class="card-category row text-center mx-1">
         <div class="col align-self-center">
-        <h1><%= @average_availability %>%</h1>
-         <p>Your text here</p>
-         </div>
-      </div>
-     <div class="card-category row text-center mx-1">
-        <div class="col align-self-center">
-        <h1><%= @average_availability %>%</h1>
+        <h1><%= @average_availability.round(2) %>%</h1>
          <p>Your text here</p>
          </div>
       </div>
