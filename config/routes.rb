@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :tools, only: [:index, :new, :create, :show, :edit, :update] do
     resources :cavities, only: [:new, :create]
+    resources :production_orders, only: [:index, :new, :create]
   end
 
   resources :wash_orders, only: [:new, :create, :show]

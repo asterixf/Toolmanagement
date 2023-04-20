@@ -1,0 +1,12 @@
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Send Tool to Production</h1>
+    <div class="registration-form">
+      <%= simple_form_for [@tool, @production_order] do |f|  %>
+        <h2>Tool: <%= @tool.alias %></h2>
+        <%= f.input :cavities_in_tool, hint: "please enter the number of cavities in the tool", required: true %>
+        <%= f.input :comments %>
+        <p>user: <%= current_user.name%> <%= current_user.lastname %></p>
+        <%= f.button :submit, "send", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+</div>
