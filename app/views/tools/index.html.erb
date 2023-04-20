@@ -70,7 +70,7 @@
           <td><%= tool.volume %></td>
           <td><%= tool.customer %></td>
           <td><%= tool.capacity %></td>
-          <td><%= tool.location %></td>
+          <td><%= link_to tool.location, new_tool_production_order_path(tool)%></td>
           <td><%= tool.damaged %></td>
           <td><%= tool.blocked %></td>
           <td><%= tool.active %></td>

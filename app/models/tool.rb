@@ -9,6 +9,7 @@ class Tool < ApplicationRecord
       }
   has_many :wash_orders
   has_many :cavities
+  has_one :production_order
   validates(
     :alias,
     :sap,
