@@ -70,7 +70,11 @@
           <td><%= tool.volume %></td>
           <td><%= tool.customer %></td>
           <td><%= tool.capacity %></td>
-          <td><%= link_to tool.location, new_tool_production_order_path(tool)%></td>
+          <% if tool.location === "production" %>
+          <td><%= link_to tool.location, edit_production_order_path(tool.production_order), class: "btn btn-primary"%></td>
+          <% else %>
+          <td><%= link_to tool.location, new_tool_production_order_path(tool), class: "btn btn-success"%></td>
+          <% end %>
           <td><%= tool.damaged %></td>
           <td><%= tool.blocked %></td>
           <td><%= tool.active %></td>

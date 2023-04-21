@@ -19,6 +19,7 @@ puts("Seeding database...")
     damaged: 0,
     blocked: 0,
     spares: 0,
+    plant: "cuautla",
     location: ["stored", "production"].sample,
     active: 0
   )
