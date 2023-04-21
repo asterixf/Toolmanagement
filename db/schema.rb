@@ -43,14 +43,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_022445) do
   end
 
   create_table "blockages", force: :cascade do |t|
-    t.bigint "cavity_id", null: false
+    t.bigint "tool_id", null: false
     t.string "reason"
     t.string "created_by"
     t.string "last_updated_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["cavity_id"], name: "index_blockages_on_cavity_id"
+    t.index ["tool_id"], name: "index_blockages_on_tool_id"
   end
 
   create_table "cavities", force: :cascade do |t|
@@ -133,7 +133,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_022445) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "blockages", "cavities"
+  add_foreign_key "blockages", "tools"
   add_foreign_key "cavities", "tools"
   add_foreign_key "production_orders", "tools"
 end

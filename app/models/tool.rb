@@ -9,6 +9,7 @@ class Tool < ApplicationRecord
       }
   has_many :wash_orders
   has_many :cavities
+  has_many :blockages
   has_one :production_order
   validates(
     :alias,
@@ -29,8 +30,8 @@ class Tool < ApplicationRecord
   has_one_attached :layout
   validate :layout_mime_type
 
-  def self.availability
-    (active * 100) / capacity
+  def update_available
+    update(available: (active * 100) / capacity)
   end
 
   private

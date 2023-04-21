@@ -5,7 +5,7 @@
         <%= f.input :alias, inline_label:'Alias' , required: true %>
         <%= f.input :sap, required: true  %>
         <%= f.input :technology, reuired: true  %>
-        <%= f.input :bu, required: true  %>
+        <%= f.input :bu, required: true, collection: [ "Damper" ,"Steering", "Low_Volume"]  %>
         <%= f.input :volume, required: true  %>
         <%= f.input :segment, required: true, hint: 'LR 1000 to 9,900 / MR 10,000 to 39,900 / HR 40,000+',
         collection: ['HR', 'MR', 'LR']%>

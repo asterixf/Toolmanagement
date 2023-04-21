@@ -170,7 +170,7 @@
       <div class="col-6 mx-auto">
         <%= simple_form_for [@tool,@cavity] do |f| %>
           <%= f.input :num , require: true %>
-          <%= f.input :status, require: true, collection: ["released", "pending"] %>
+          <%= f.input :status, require: true, collection: ["released", "unavail"] %>
           <%= f.input :is_spare, label: "Is spare" %>
           <%= f.button :submit, "Add_Cavity", class:"btn btn-primary mb-3" %>
         <% end %>
@@ -190,7 +190,7 @@
         <% if @cavities %>
           <% @cavities.each do |cavity| %>
             <tr>
-              <td><%= cavity.num %></td>
+              <td><%= link_to cavity.num, edit_cavity_path(cavity) %></td>
               <td><%= cavity.status %></td>
               <td><%= cavity.is_spare ? 'Yes' : 'No' %></td>
               <td><%= cavity.created_by %></td>

@@ -1,0 +1,21 @@
+<div class="mt-2 mx-4">
+</div>
+  <% if @blockages.empty? %>
+    <div class="my-3">
+      <h1 class="fw-bold text-center">No blockages found</h1>
+    </div>
+  <% else %>
+    <div class="row justify-content-end">
+      <div class="col-lg-4 col-md-6 my-2">
+        <%= form_with url: tools_path, method: :get, class: "d-flex" do %>
+          <%= text_field_tag :query,
+                params[:query],
+                class: "form-control",
+                placeholder: "Type a keyword"
+            %>
+          <%= submit_tag "Search", name: "", class: "btn btn-secondary" %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
