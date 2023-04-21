@@ -6,6 +6,7 @@
         <p><strong>Tool SAP:</strong> <%= @tool.sap %></p>
         <p><strong>Tool BU:</strong> <%= @tool.bu %></p>
         <p><strong>User:</strong> <%= current_user.name %> <%= current_user.lastname %></p>
+        <%= f.association :cavity, label_method: :cavity_num, collection: @tool.cavities.released.unblocked %>
         <%= f.input :reason, collection: ["damaged", "wash"] %>
         <%= f.button :submit, "Create", class:"btn btn-primary mb-3" %>
     <% end %>

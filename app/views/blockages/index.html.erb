@@ -1,21 +1,27 @@
-<div class="mt-2 mx-4">
-</div>
-  <% if @blockages.empty? %>
+<div class="container my-3">
+  <% if @tools_with_blockages.empty? %>
     <div class="my-3">
       <h1 class="fw-bold text-center">No blockages found</h1>
     </div>
   <% else %>
-    <div class="row justify-content-end">
-      <div class="col-lg-4 col-md-6 my-2">
-        <%= form_with url: tools_path, method: :get, class: "d-flex" do %>
-          <%= text_field_tag :query,
-                params[:query],
-                class: "form-control",
-                placeholder: "Type a keyword"
-            %>
-          <%= submit_tag "Search", name: "", class: "btn btn-secondary" %>
-        <% end %>
-      </div>
-    </div>
+  <h1 class="text-center fw-bold"> Active blockages</h1>
+    <% @tools_with_blockages.each do |tool| %>
+    <div class="card mx-auto">
+  <div class="card-header bg-secondary">
+   <strong>Tool Alias:</strong> <%= tool.alias  %>
+   <strong>Tool SAP:</strong> <%= tool.sap %>
+  </div>
+    <% tool.blockages.each do |blockage| %>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">
+      <strong>Cavity:</strong> <%= blockage.cavity.num %>
+      <strong>Reason:</strong> <%= blockage.reason %>
+      <strong>Created_By:</strong> <%= blockage.created_by%>
+      <strong>Created at:</strong> <%= blockage.created_at.in_time_zone("America/Mexico_City").strftime("%d-%m-%y %H:%M") %>
+    </li>
+    <% end %>
+  </ul>
+</div>
+    <% end %>
   <% end %>
 </div>
