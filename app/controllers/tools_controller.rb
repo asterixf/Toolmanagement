@@ -1,9 +1,9 @@
 class ToolsController < ApplicationController
   def index
     if params[:query].present?
-      @tools = Tool.search_by_params(params[:query]).order(updated_at: :desc)
+      @tools = Tool.search_by_params(params[:query]).order(location: :asc)
     else
-      @tools = Tool.all.order(updated_at: :desc)
+      @tools = Tool.all.order(location: :asc)
     end
     @average_availability = @tools.average(:available)
     respond_to do |format|

@@ -14,16 +14,33 @@ class ProductionOrdersController < ApplicationController
     fill_production_order_fields
     if @production_order.save
       @tool.update(location: "production")
-      redirect_to tool_path(@tool)
+      redirect_to tools_path
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @production_order = ProductionOrder.find(params[:id])
+  end
+
+  def update
+    @production_order = ProductionOrder.find(params[:id])
+    if @production_order.update(production_order_params)
+      @production_order.update(last_updated_by: "#{current_user.id}-#{current_user.name} #{current_user.lastname}")
+        if @production_order.status == "closed"
+          @production_order.tool.update(location: "stored")
+        end
+      redirect_to tools_path
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
   def production_order_params
-    params.require(:production_order).permit(:cavities_in_tool, :comments)
+    params.require(:production_order).permit(:cavities_in_tool, :comments, :status)
   end
 
   def fill_production_order_fields
