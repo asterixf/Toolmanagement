@@ -1,0 +1,13 @@
+<div class="container my-3">
+  <h1 class="text-center fw-bold">New Blockage</h1>
+  <div class="registration-form">
+    <%= simple_form_for [@tool, @blockage] do |f| %>
+        <h2><strong>Tool Alias:</strong> <%= @tool.alias %></h2>
+        <p><strong>Tool SAP:</strong> <%= @tool.sap %></p>
+        <p><strong>Tool BU:</strong> <%= @tool.bu %></p>
+        <p><strong>User:</strong> <%= current_user.name %> <%= current_user.lastname %></p>
+        <%= f.input :reason, collection: ["damaged", "wash"] %>
+        <%= f.button :submit, "Create", class:"btn btn-primary mb-3" %>
+    <% end %>
+  </div>
+</div>

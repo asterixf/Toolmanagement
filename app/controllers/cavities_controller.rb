@@ -12,9 +12,9 @@ class CavitiesController < ApplicationController
     @cavity = Cavity.new(cavity_params)
     @cavity.tool = @tool
     @cavity.created_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
-    @cavity.last_updated_by = @cavity.created_by
     if @cavity.save
       update_active_cavities(@tool)
+      @tool.update_available
       redirect_to tool_path(@tool)
     else
       flash[:alert] = "Error: num and satatus can't be blank / cavity num should be unique in tool  "
@@ -22,6 +22,20 @@ class CavitiesController < ApplicationController
     end
   end
 
+  def edit
+    @cavity = Cavity.find(params[:id])
+  end
+
+  def update
+    @cavity = Cavity.find(params[:id])
+    @cavity.last_updated_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
+    if @cavity.update(cavity_params)
+      update_active_cavities(@cavity.tool)
+      redirect_to tool_path(@cavity.tool)
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
   private
 
   def cavity_params
@@ -33,7 +47,8 @@ class CavitiesController < ApplicationController
   end
 
   def update_active_cavities(tool)
-    active_cavities = tool.cavities.where(status: "released")
-    tool.update(active: active_cavities.count)
+    active_cavities = tool.cavities.where(status: "released", is_spare: false)
+    spare_cavities = tool.cavities.where(is_spare: true)
+    tool.update(active: active_cavities.count, spares: spare_cavities.count)
   end
 end

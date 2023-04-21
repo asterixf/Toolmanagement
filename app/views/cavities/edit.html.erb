@@ -1,0 +1,14 @@
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Edit Production Order</h1>
+    <div class="registration-form">
+      <%= simple_form_for @cavity do |f|  %>
+        <h2>Edit Cavity: <%= @cavity.num %></h2>
+          <%= f.input :num , require: true %>
+          <%= f.input :status, require: true, collection: ["released", "unavail"] %>
+          <%= f.input :is_spare, label: "Is spare" %>
+        <p>created by: <%= @cavity.created_by %> <%=  %></p>
+        <p>Last_edited_by: <%= @cavity.last_updated_by %></p>
+        <%= f.button :submit, "save", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+</div>

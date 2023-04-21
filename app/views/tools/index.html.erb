@@ -23,7 +23,7 @@
       <%= link_to "Export Tools CSV", tools_path(format: :csv), class:"btn btn-secondary btn-sm align-self-end" %>
     </div>
     <div class="scroll-container rounded-4 bg-light">
-        <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded">
+        <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded centered-table">
           <thead>
             <tr>
               <th>Id</th>
@@ -42,7 +42,7 @@
               <th>Active</th>
               <th>Spare</th>
               <th>Segment</th>
-              <th>Available %</th>
+              <th>Avail%</th>
             </tr>
           </thead>
           <tbody>
@@ -71,12 +71,22 @@
           <td><%= tool.customer %></td>
           <td><%= tool.capacity %></td>
           <% if tool.location === "production" %>
-          <td><%= link_to tool.location, edit_production_order_path(tool.production_order), class: "btn btn-primary"%></td>
+          <td><%= link_to "produc", edit_production_order_path(tool.production_order), class: "btn btn-primary"%></td>
           <% else %>
           <td><%= link_to tool.location, new_tool_production_order_path(tool), class: "btn btn-success"%></td>
           <% end %>
-          <td><%= tool.damaged %></td>
-          <td><%= tool.blocked %></td>
+          <td>
+          <%= tool.damaged %>
+          <%= link_to new_tool_blockage_path(tool) do %>
+          <i class="fa-solid fa-square-plus"></i>
+          <% end %>
+          </td>
+          <td>
+          <%= tool.blocked %>
+          <%= link_to new_tool_blockage_path(tool) do %>
+          <i class="fa-solid fa-square-plus"></i>
+          <% end %>
+          </td>
           <td><%= tool.active %></td>
           <td><%= tool.spares %></td>
           <td><%= tool.segment %></td>

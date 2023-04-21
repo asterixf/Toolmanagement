@@ -6,12 +6,12 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 puts("Seeding database...")
-200.times do
+50.times do
   Tool.create(
     alias: Faker::Alphanumeric.alpha(number: 8),
     sap: Faker::Alphanumeric.alpha(number: 4),
     technology: Faker::ElectricalComponents.active,
-    bu: Faker::Company.industry,
+    bu: ["Damper", "Steering", "Low_Volume"].sample,
     volume: Faker::Number.within(range: 8000..10000),
     segment: ["HR", "MR", "HR"].sample,
     customer: Faker::Company.name,
@@ -19,9 +19,10 @@ puts("Seeding database...")
     damaged: 0,
     blocked: 0,
     spares: 0,
+    available: 0,
     plant: "cuautla",
-    location: ["stored", "production"].sample,
-    active: 0
+    active: 0,
+    location: "stored"
   )
 end
 puts("Seeding complete!")

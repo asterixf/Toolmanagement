@@ -15,7 +15,7 @@ class ToolsController < ApplicationController
   def show
     @tool = Tool.find(params[:id])
     @cavity = Cavity.new
-    @cavities = @tool.cavities
+    @cavities = @tool.cavities.order(status: :asc)
   end
 
   def new
@@ -38,7 +38,6 @@ class ToolsController < ApplicationController
 
   def update
     @tool = Tool.find(params[:id])
-    params[:tool][:active] = params[:tool][:capacity]
     if @tool.update(tool_params)
       redirect_to tool_path(@tool)
     else
@@ -60,7 +59,7 @@ class ToolsController < ApplicationController
     @tool.damaged = 0
     @tool.blocked = 0
     @tool.spares = 0
-    @tool.available = 100
+    @tool.available = 0
     @tool.plant = current_user.plant
     @tool.location = "stored"
   end
