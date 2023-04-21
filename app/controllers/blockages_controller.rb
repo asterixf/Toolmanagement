@@ -1,7 +1,7 @@
 class BlockagesController < ApplicationController
 
   def index
-    @blockages = Blockage.all
+    @tools_with_blockages = Tool.includes(:blockages).joins(:blockages).distinct.order(updated_at: :desc)
   end
 
   def new
@@ -26,7 +26,7 @@ class BlockagesController < ApplicationController
   private
 
   def blockage_params
-    params.require(:blockage).permit(:reason)
+    params.require(:blockage).permit(:reason, :cavity_id)
   end
 
   def set_blockage_values
