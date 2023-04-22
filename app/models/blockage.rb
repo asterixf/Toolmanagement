@@ -8,5 +8,6 @@ class Blockage < ApplicationRecord
       }
   belongs_to :cavity
   belongs_to :tool
-  has_and_belongs_to_many :wash_orders
+  has_many :wash_orders, through: :washables
+  has_many :washables
 end
