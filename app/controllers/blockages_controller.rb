@@ -1,7 +1,14 @@
 class BlockagesController < ApplicationController
 
   def index
-    @blockages = Blockage.all
+    @tools_wash = Tool.joins(:blockages)
+                      .where(blockages: { reason: "wash" })
+                      .group(:id)
+                      .having("COUNT(blockages.id) >= ?", 1)
+    @tools_damaged = Tool.joins(:blockages)
+                         .where(blockages: { reason: "damaged" })
+                         .group(:id)
+                         .having("COUNT(blockages.id) >= ?", 1)
   end
 
   def new
@@ -26,7 +33,7 @@ class BlockagesController < ApplicationController
   private
 
   def blockage_params
-    params.require(:blockage).permit(:reason)
+    params.require(:blockage).permit(:reason, :cavity_id)
   end
 
   def set_blockage_values

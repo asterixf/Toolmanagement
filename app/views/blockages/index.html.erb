@@ -1,21 +1,40 @@
-<div class="mt-2 mx-4">
-</div>
-  <% if @blockages.empty? %>
-    <div class="my-3">
-      <h1 class="fw-bold text-center">No blockages found</h1>
-    </div>
-  <% else %>
-    <div class="row justify-content-end">
-      <div class="col-lg-4 col-md-6 my-2">
-        <%= form_with url: tools_path, method: :get, class: "d-flex" do %>
-          <%= text_field_tag :query,
-                params[:query],
-                class: "form-control",
-                placeholder: "Type a keyword"
-            %>
-          <%= submit_tag "Search", name: "", class: "btn btn-secondary" %>
-        <% end %>
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Active Blockages to wash</h1>
+    <div class="cards my-5">
+    <% @tools_wash.each do  |tool|%>
+      <div class="card shadow p-3 m-1 bg-body-tertiary rounded" style="width: 25rem;">
+        <div class="card-header">
+          <strong>Tool Alias:</strong> <%= tool.alias %>
+          <strong>Tool SAP:</strong> <%= tool.sap %>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% tool.blockages.where(reason: "wash").each do |blockage| %>
+            <li class="list-group-item">
+              <strong>Cavity:</strong> <%= blockage.cavity.num %>
+              <strong>Created_by:</strong> <%= blockage.created_by %>
+            </li>
+          <% end %>
+        </ul>
       </div>
+    <% end %>
     </div>
-  <% end %>
+    <h1 class="text-center fw-bold my-5">Active Blockages Damage</h1>
+    <div class="cards">
+    <% @tools_damaged.each do  |tool|%>
+      <div class="card shadow p-3 m-1 bg-body-tertiary rounded">
+        <div class="card-header">
+          <strong>Tool Alias:</strong> <%= tool.alias %>
+          <strong>Tool SAP:</strong> <%= tool.sap %>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% tool.blockages.where(reason: "damaged").each do |blockage| %>
+            <li class="list-group-item">
+              <strong>Cavity:</strong> <%= blockage.cavity.num %>
+              <strong>Created_by:</strong> <%= blockage.created_by %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    </div>
 </div>

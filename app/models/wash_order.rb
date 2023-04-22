@@ -1,4 +1,5 @@
 class WashOrder < ApplicationRecord
   belongs_to :tool
-  validates(:created_by, :qty, :status, presence: true)
+  has_and_belongs_to_many :blockages
+  validates :created_by, :status, presence: true
 end
