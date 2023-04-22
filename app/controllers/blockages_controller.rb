@@ -1,7 +1,14 @@
 class BlockagesController < ApplicationController
 
   def index
-    @tools_with_blockages = Tool.includes(:blockages).joins(:blockages).distinct.order(updated_at: :desc)
+    @tools_wash = Tool.joins(:blockages)
+                      .where(blockages: { reason: "wash" })
+                      .group(:id)
+                      .having("COUNT(blockages.id) >= ?", 1)
+    @tools_damaged = Tool.joins(:blockages)
+                         .where(blockages: { reason: "damaged" })
+                         .group(:id)
+                         .having("COUNT(blockages.id) >= ?", 1)
   end
 
   def new

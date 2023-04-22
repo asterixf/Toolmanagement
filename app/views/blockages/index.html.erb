@@ -1,27 +1,40 @@
 <div class="container my-3">
-  <% if @tools_with_blockages.empty? %>
-    <div class="my-3">
-      <h1 class="fw-bold text-center">No blockages found</h1>
+  <h1 class="text-center fw-bold">Active Blockages to wash</h1>
+    <div class="cards my-5">
+    <% @tools_wash.each do  |tool|%>
+      <div class="card shadow p-3 m-1 bg-body-tertiary rounded" style="width: 25rem;">
+        <div class="card-header">
+          <strong>Tool Alias:</strong> <%= tool.alias %>
+          <strong>Tool SAP:</strong> <%= tool.sap %>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% tool.blockages.where(reason: "wash").each do |blockage| %>
+            <li class="list-group-item">
+              <strong>Cavity:</strong> <%= blockage.cavity.num %>
+              <strong>Created_by:</strong> <%= blockage.created_by %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     </div>
-  <% else %>
-  <h1 class="text-center fw-bold"> Active blockages</h1>
-    <% @tools_with_blockages.each do |tool| %>
-    <div class="card mx-auto">
-  <div class="card-header bg-secondary">
-   <strong>Tool Alias:</strong> <%= tool.alias  %>
-   <strong>Tool SAP:</strong> <%= tool.sap %>
-  </div>
-    <% tool.blockages.each do |blockage| %>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">
-      <strong>Cavity:</strong> <%= blockage.cavity.num %>
-      <strong>Reason:</strong> <%= blockage.reason %>
-      <strong>Created_By:</strong> <%= blockage.created_by%>
-      <strong>Created at:</strong> <%= blockage.created_at.in_time_zone("America/Mexico_City").strftime("%d-%m-%y %H:%M") %>
-    </li>
+    <h1 class="text-center fw-bold my-5">Active Blockages Damage</h1>
+    <div class="cards">
+    <% @tools_damaged.each do  |tool|%>
+      <div class="card shadow p-3 m-1 bg-body-tertiary rounded">
+        <div class="card-header">
+          <strong>Tool Alias:</strong> <%= tool.alias %>
+          <strong>Tool SAP:</strong> <%= tool.sap %>
+        </div>
+        <ul class="list-group list-group-flush">
+          <% tool.blockages.where(reason: "damaged").each do |blockage| %>
+            <li class="list-group-item">
+              <strong>Cavity:</strong> <%= blockage.cavity.num %>
+              <strong>Created_by:</strong> <%= blockage.created_by %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
     <% end %>
-  </ul>
-</div>
-    <% end %>
-  <% end %>
+    </div>
 </div>

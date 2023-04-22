@@ -10,7 +10,8 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_21_070741) do
+
+ActiveRecord::Schema[7.0].define(version: 2023_04_21_221438) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,9 +51,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_070741) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "cavity_id", null: false
+    t.bigint "cavity_id"
     t.index ["cavity_id"], name: "index_blockages_on_cavity_id"
     t.index ["tool_id"], name: "index_blockages_on_tool_id"
+  end
+
+  create_table "blockages_wash_orders", id: false, force: :cascade do |t|
+    t.bigint "wash_order_id", null: false
+    t.bigint "blockage_id", null: false
+    t.index ["blockage_id"], name: "index_blockages_wash_orders_on_blockage_id"
+    t.index ["wash_order_id"], name: "index_blockages_wash_orders_on_wash_order_id"
   end
 
   create_table "cavities", force: :cascade do |t|
@@ -122,8 +130,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_070741) do
   create_table "wash_orders", force: :cascade do |t|
     t.bigint "tool_id", null: false
     t.string "created_by"
-    t.string "tool_alias"
-    t.integer "qty"
     t.text "comments"
     t.string "status"
     t.string "closed_by"
