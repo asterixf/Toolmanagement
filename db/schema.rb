@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_21_155731) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_22_044058) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,13 +53,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_155731) do
     t.bigint "cavity_id", null: false
     t.index ["cavity_id"], name: "index_blockages_on_cavity_id"
     t.index ["tool_id"], name: "index_blockages_on_tool_id"
-  end
-
-  create_table "blockages_wash_orders", id: false, force: :cascade do |t|
-    t.bigint "wash_order_id", null: false
-    t.bigint "blockage_id", null: false
-    t.index ["blockage_id"], name: "index_blockages_wash_orders_on_blockage_id"
-    t.index ["wash_order_id"], name: "index_blockages_wash_orders_on_wash_order_id"
   end
 
   create_table "cavities", force: :cascade do |t|
@@ -138,10 +131,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_21_155731) do
     t.index ["tool_id"], name: "index_wash_orders_on_tool_id"
   end
 
+  create_table "washables", force: :cascade do |t|
+    t.bigint "wash_order_id", null: false
+    t.bigint "blockage_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
+    t.index ["blockage_id"], name: "index_washables_on_blockage_id"
+    t.index ["wash_order_id"], name: "index_washables_on_wash_order_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blockages", "cavities"
   add_foreign_key "blockages", "tools"
   add_foreign_key "cavities", "tools"
   add_foreign_key "production_orders", "tools"
+  add_foreign_key "washables", "blockages"
+  add_foreign_key "washables", "wash_orders"
 end

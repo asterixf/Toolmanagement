@@ -1,20 +1,26 @@
 class WashOrdersController < ApplicationController
+  def index
+    @wash_orders = WashOrder.all
+  end
 
   def show
     @wash_order = WashOrder.find(params[:id])
   end
 
   def new
+    @tool = Tool.find(params[:tool_id])
     @wash_order = WashOrder.new
+    @blockages = @tool.blockages.where(reason: "wash", status: "open")
   end
 
   def create
+    @tool = Tool.find(params[:tool_id])
     @wash_order = WashOrder.new(washorder_paramas)
-    @wash_order.created_by = "#{current_user.name} #{current_user.lastname}"
-    @wash_order.status = "In_process"
-    update_tool_blocked
+    @wash_order.tool = @tool
+    @blockages = @tool.blockages.where(reason: "wash", status: "open")
+    @wash_order.blockages = @blockages
     if @wash_order.save
-      redirect_to dashboard_path
+      redirect_to wash_orders_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -23,11 +29,12 @@ class WashOrdersController < ApplicationController
   private
 
   def washorder_paramas
-    params.require(:wash_order).permit(:tool_id, :qty, :comments)
+    params.require(:wash_order).permit(:comments)
   end
 
-  def update_tool_blocked
-    @wash_order.tool.blocked = @wash_order.tool.blocked + @wash_order.qty
-    @wash_order.tool.save
+  def set_wash_order_values
+    @wash_order.tool = @tool
+    @wash_order.created_by = "#{current_user.name} #{current_user.lastname}"
+    @wash_order.status = "open"
   end
 end
