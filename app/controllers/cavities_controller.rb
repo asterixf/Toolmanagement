@@ -13,7 +13,7 @@ class CavitiesController < ApplicationController
     @cavity.tool = @tool
     @cavity.created_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
     if @cavity.save
-      update_active_cavities(@tool)
+      update_active_spares
       @tool.update_available
       redirect_to tool_path(@tool)
     else
@@ -47,9 +47,11 @@ class CavitiesController < ApplicationController
     @tool = Tool.find(params[:tool_id])
   end
 
-  def update_active_cavities(tool)
-    active_cavities = tool.cavities.where(status: "released", is_spare: false)
-    spare_cavities = tool.cavities.where(is_spare: true)
-    tool.update(active: active_cavities.count, spares: spare_cavities.count)
+  def update_active_spares
+    active_cavities = @tool.cavities.where(status: "released", is_spare: false).count
+    spares = @tool.cavities.where(is_spare: true).count
+    active = active_cavities - (@tool.blocked + @tool.damaged)
+    @tool.update(active: active, spares: spares)
+    @tool.update_available
   end
 end
