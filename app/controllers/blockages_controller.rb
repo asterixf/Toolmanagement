@@ -26,7 +26,6 @@ class BlockagesController < ApplicationController
       redirect_to blockages_path
     else
       render :new, status: :unprocessable_entity
-
     end
   end
 

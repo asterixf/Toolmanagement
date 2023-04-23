@@ -16,20 +16,33 @@ class WashOrdersController < ApplicationController
   def create
     @tool = Tool.find(params[:tool_id])
     @wash_order = WashOrder.new(washorder_paramas)
-    @wash_order.tool = @tool
+    set_wash_order_values
     @blockages = @tool.blockages.where(reason: "wash", status: "open")
     @wash_order.blockages = @blockages
     if @wash_order.save
-      redirect_to wash_orders_path
+      redirect_to tools_path
     else
       render :new, status: :unprocessable_entity
+    end
+  end
+
+  def edit
+    @wash_order = WashOrder.find(params[:id])
+  end
+
+  def update
+    @wash_order = WashOrder.find(params[:wash_order_id])
+    if @wash_order.update(washorder_paramas)
+      redirect_to tools_path
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   private
 
   def washorder_paramas
-    params.require(:wash_order).permit(:comments)
+    params.require(:wash_order).permit(:comments, :status)
   end
 
   def set_wash_order_values

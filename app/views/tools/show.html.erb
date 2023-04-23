@@ -146,11 +146,21 @@
         </tr>
         <tr>
         <td class="fw-bold">
-        Cavities Overview:
+        Active Cavities:
         </td>
         <td>
           <% if @tool.cavities %>
-            <%= @tool.cavities.map { |c| c.num }.join(", ") %>
+            <%= @tool.cavities.select { |c| c.status == 'released' }.map { |c| c.num }.join(", ") %>
+          <% end %>
+        </td>
+        </tr>
+        <tr>
+        <td class="fw-bold">
+        Unavail Cavities:
+        </td>
+        <td>
+          <% if @tool.cavities %>
+            <%= @tool.cavities.select { |c| c.status == 'unavail' }.map { |c| c.num }.join(", ") %>
           <% end %>
         </td>
         </tr>

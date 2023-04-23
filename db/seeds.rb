@@ -6,23 +6,88 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 puts("Seeding database...")
-50.times do
+10.times do
   Tool.create(
     alias: Faker::Alphanumeric.alpha(number: 8),
     sap: Faker::Alphanumeric.alpha(number: 4),
     technology: Faker::ElectricalComponents.active,
-    bu: ["Damper", "Steering", "Low_Volume"].sample,
+    bu: "Damper",
     volume: Faker::Number.within(range: 8000..10000),
     segment: ["HR", "MR", "HR"].sample,
     customer: Faker::Company.name,
-    capacity: Faker::Number.within(range: 17...85),
+    capacity: 35,
     damaged: 0,
     blocked: 0,
     spares: 0,
     available: 0,
     plant: "cuautla",
-    active: 0,
-    location: "stored"
+    active: 35,
+    location: "stored",
   )
-end
+  35.times do
+    Cavity.create(
+      tool: Tool.last,
+      num: Cavity.where(tool: Tool.last).count + 1,
+      status: "released",
+      is_spare: false,
+      created_by: "seed"
+    )
+      end
+  end
+  10.times do
+    Tool.create(
+      alias: Faker::Alphanumeric.alpha(number: 8),
+      sap: Faker::Alphanumeric.alpha(number: 4),
+      technology: Faker::ElectricalComponents.active,
+      bu: "Steering",
+      volume: Faker::Number.within(range: 8000..10000),
+      segment: ["HR", "MR", "HR"].sample,
+      customer: Faker::Company.name,
+      capacity: 35,
+      damaged: 0,
+      blocked: 0,
+      spares: 0,
+      available: 0,
+      plant: "cuautla",
+      active: 35,
+      location: "stored"
+    )
+    35.times do
+      Cavity.create(
+        tool: Tool.last,
+        num: Cavity.where(tool: Tool.last).count + 1,
+        status: "released",
+        is_spare: false,
+        created_by: "seed"
+      )
+    end
+  end
+    10.times do
+      Tool.create(
+        alias: Faker::Alphanumeric.alpha(number: 8),
+        sap: Faker::Alphanumeric.alpha(number: 4),
+        technology: Faker::ElectricalComponents.active,
+        bu: "Low_Volume",
+        volume: Faker::Number.within(range: 8000..10000),
+        segment: ["HR", "MR", "HR"].sample,
+        customer: Faker::Company.name,
+        capacity: 35,
+        damaged: 0,
+        blocked: 0,
+        spares: 0,
+        available: 0,
+        plant: "cuautla",
+        active: 35,
+        location: "stored",
+      )
+      35.times do
+        Cavity.create(
+          tool: Tool.last,
+          num: Cavity.where(tool: Tool.last).count + 1,
+          status: "released",
+          is_spare: false,
+          created_by: "seed"
+        )
+      end
+  end
 puts("Seeding complete!")

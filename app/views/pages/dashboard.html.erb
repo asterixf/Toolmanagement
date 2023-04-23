@@ -1,29 +1,40 @@
 <div class="container my-3">
     <div class="my-3">
-      <%= link_to new_wash_order_path, class:"btn btn-primary" do %>
-        <i class="fa-solid fa-hand-sparkles"></i> New_wash_order
-      <% end %>
-      <%= link_to "#", class:"btn btn-primary" do %>
-        <i class="fa-sharp fa-solid fa-file-invoice"></i> Report_damage
-      <% end %>
-    </div>
     <div class="cards my-5">
+      <% if @damper_availability <= 70 %>
       <div class="card-category row text-center mx-1 bg-danger">
+      <% elsif @damper_availability < 90 %>
+      <div class="card-category row text-center mx-1 bg-warning">
+      <% else %>
+      <div class="card-category row text-center mx-1 bg-success">
+      <% end %>
         <div class="col align-self-center">
-        <h1><%= @average_availability.round(2) %>%</h1>
-         <p class="fw-bold">General Availability</p>
+        <h1><%= @damper_availability.round(2) %>%</h1>
+         <p class="fw-bold">Damper Availability</p>
          </div>
       </div>
-     <div class="card-category row text-center mx-1">
+      <% if @steering_availability <= 70 %>
+      <div class="card-category row text-center mx-1 bg-danger">
+      <% elsif @steering_availability < 90 %>
+      <div class="card-category row text-center mx-1 bg-warning">
+      <% else %>
+      <div class="card-category row text-center mx-1 bg-success">
+      <% end %>
         <div class="col align-self-center">
-        <h1><%= @average_availability.round(2) %>%</h1>
-         <p>Your text here</p>
+        <h1><%= @steering_availability.round(2) %>%</h1>
+         <p class="fw-bold">Steering Availability</p>
          </div>
       </div>
-     <div class="card-category row text-center mx-1">
+      <% if @low_volume_availability <= 70 %>
+      <div class="card-category row text-center mx-1 bg-danger">
+      <% elsif  @low_volume_availability < 90 %>
+      <div class="card-category row text-center mx-1 bg-warning">
+      <% else %>
+      <div class="card-category row text-center mx-1 bg-success">
+      <% end %>
         <div class="col align-self-center">
-        <h1><%= @average_availability.round(2) %>%</h1>
-         <p>Your text here</p>
+        <h1><%= @low_volume_availability.round(2) %>%</h1>
+         <p class="fw-bold">Low_Volume Availability</p>
          </div>
       </div>
     </div>
