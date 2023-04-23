@@ -19,6 +19,9 @@
           </ul>
         </div>
         <div class="card-footer">
+        <% if tool.wash_orders.empty? %>
+          <%= link_to "Request_wash_Service", new_tool_wash_order_path(tool), class:"btn btn-primary" %>
+        <% end %>
         </div>
       </div>
     <% end %>
