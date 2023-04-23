@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users
   root to: "pages#home"
+
+  get 'dashboard', to: 'pages#dashboard'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :tools, only: [:index, :new, :create, :show, :edit, :update] do
     resources :cavities, only: [:new, :create]
@@ -15,7 +17,6 @@ Rails.application.routes.draw do
 
   resources :blockages, only: [:index, :edit]
 
-  resources :wash_orders, only: [:index, :show]
+  resources :wash_orders, only: [:index, :show, :edit, :update]
 
-  get 'dashboard', to: 'pages#dashboard'
 end

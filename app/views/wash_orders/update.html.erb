@@ -1,0 +1,17 @@
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Edit Wash_Order</h1>
+  <div class="registration-form">
+    <%= simple_form_for [@tool, @wash_order] do |f| %>
+        <h2 class="text-center">Tool: <%= @tool.alias %> </h2>
+        <p>
+          Cavities:
+        <% @blockages.each do |blockage| %>
+          <%= blockage.cavity.num %>,
+        <% end %>
+        </p>
+        <%= f.input :status, require:true, collection: ["open", "In_Process", "closed"] %>
+        <%= f.input :comments, require: true %>
+        <%= f.button :submit, "Send_to_Wash", class:"btn btn-primary mb-3" %>
+    <% end %>
+  </div>
+</div>

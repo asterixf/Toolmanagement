@@ -9,6 +9,9 @@ class PagesController < ApplicationController
       @average_availability = 0
     else
       @average_availability = Tool.all.average(:available)
+      @damper_availability = Tool.where(bu: "Damper").average(:available)
+      @steering_availability = Tool.where(bu: "Steering").average(:available)
+      @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)
     end
   end
 end

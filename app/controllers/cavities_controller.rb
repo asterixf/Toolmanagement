@@ -1,5 +1,5 @@
 class CavitiesController < ApplicationController
-  before_action :set_tool, only: [:new, :create]
+  before_action :set_tool, only: [:new, :create, :edit, :update]
   def index
     @cavities = Cavity.all
   end
@@ -23,15 +23,16 @@ class CavitiesController < ApplicationController
   end
 
   def edit
-    @cavity = Cavity.find(params[:id])
+    @cavity = Cavity.find(params[:cavity_id])
   end
 
   def update
-    @cavity = Cavity.find(params[:id])
+    @cavity = Cavity.find(params[:cavity_id])
     @cavity.last_updated_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
     if @cavity.update(cavity_params)
-      update_active_cavities(@cavity.tool)
-      redirect_to tool_path(@cavity.tool)
+      update_active_cavities(@tool)
+      @tool.update_available
+      redirect_to tool_path(@tool)
     else
       render :edit, status: :unprocessable_entity
     end
