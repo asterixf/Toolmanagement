@@ -5,13 +5,9 @@ class PagesController < ApplicationController
   end
 
   def dashboard
-    if Tool.all.empty?
-      @average_availability = 0
-    else
-      @average_availability = Tool.all.average(:available)
-      @damper_availability = Tool.where(bu: "Damper").average(:available)
-      @steering_availability = Tool.where(bu: "Steering").average(:available)
-      @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)
-    end
+    @average_availability = Tool.all.average(:available)&.round(2) || 0
+    @damper_availability = Tool.where(bu: "Damper").average(:available)&.round(2) || 0
+    @steering_availability = Tool.where(bu: "Steering").average(:available)&.round(2) || 0
+    @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)&.round(2) || 0
   end
 end
