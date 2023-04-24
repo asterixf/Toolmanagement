@@ -27,6 +27,7 @@ class ToolsController < ApplicationController
     set_tool_values
     if @tool.save
       redirect_to tool_path(@tool)
+
     else
       render :new, status: :unprocessable_entity
     end
@@ -59,7 +60,6 @@ class ToolsController < ApplicationController
     @tool.damaged = 0
     @tool.blocked = 0
     @tool.spares = 0
-    @tool.available = 0
     @tool.plant = current_user.plant
     @tool.location = "stored"
   end
