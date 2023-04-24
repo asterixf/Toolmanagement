@@ -1,4 +1,5 @@
 class WashOrdersController < ApplicationController
+   before_action :set_tool, only: [:new, :create]
   def index
     @wash_orders = WashOrder.all
   end
@@ -8,13 +9,11 @@ class WashOrdersController < ApplicationController
   end
 
   def new
-    @tool = Tool.find(params[:tool_id])
     @wash_order = WashOrder.new
     @blockages = @tool.blockages.where(reason: "wash", status: "open")
   end
 
   def create
-    @tool = Tool.find(params[:tool_id])
     @wash_order = WashOrder.new(washorder_paramas)
     set_wash_order_values
     @blockages = @tool.blockages.where(reason: "wash", status: "open")
@@ -43,6 +42,10 @@ class WashOrdersController < ApplicationController
 
   def washorder_paramas
     params.require(:wash_order).permit(:comments, :status)
+  end
+
+  def set_tool
+    @tool = Tool.find(params[:tool_id])
   end
 
   def set_wash_order_values
