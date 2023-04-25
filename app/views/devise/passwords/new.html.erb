@@ -1,7 +1,6 @@
 <div class="container my-3">
-  <h2 class="text-center">Forgot your password?</h2>
-  <div class="col-6 mx-auto border border-secondary-subtle
-    shadow p-5 mb-5 bg-body-tertiary rounded">
+  <h2 class="text-center fw-bold">Forgot your password?</h2>
+  <div class="registration-form">
     <%= simple_form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= f.error_notification %>
 
@@ -13,7 +12,7 @@
       </div>
 
       <div class="form-actions">
-        <%= f.button :submit, "Reset", class:"btn btn-secondary mb-3" %>
+        <%= f.button :submit, "Reset", class:"btn btn-primary mb-3" %>
       </div>
     <% end %>
       <%= link_to new_session_path(resource_name) do %>

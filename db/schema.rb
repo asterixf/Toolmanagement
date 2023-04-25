@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_22_044058) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_25_015328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -128,6 +128,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_22_044058) do
     t.time "washing_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "active"
+    t.integer "blocked"
+    t.integer "damaged"
     t.index ["tool_id"], name: "index_wash_orders_on_tool_id"
   end
 

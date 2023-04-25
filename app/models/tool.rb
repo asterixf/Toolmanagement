@@ -7,7 +7,7 @@ class Tool < ApplicationRecord
       using: {
       tsearch: { prefix: true }
       }
-  has_many :wash_orders, dependent: :destroy
+  has_one :wash_order, dependent: :destroy
   has_many :cavities, dependent: :destroy
   has_many :blockages, dependent: :destroy
   has_one :production_order, dependent: :destroy
