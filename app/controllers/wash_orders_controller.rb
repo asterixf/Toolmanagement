@@ -51,6 +51,9 @@ class WashOrdersController < ApplicationController
   def set_wash_order_values
     @wash_order.tool = @tool
     @wash_order.created_by = "#{current_user.name} #{current_user.lastname}"
+    @wash_order.active = @wash_order.tool.active
+    @wash_order.damaged = @wash_order.tool.damaged
+    @wash_order.blocked = @wash_order.tool.blocked
     @wash_order.status = "open"
   end
 end
