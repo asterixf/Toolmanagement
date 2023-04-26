@@ -6,7 +6,7 @@ config.action_mailer.default_options = {from: 'no-reply@freudenhub.com'}
 config.action_mailer.smtp_settings = {
   address:              'smtp.gmail.com',
   port:                 587,
-  domain:               'localhost:3000'
+  domain:               'localhost:3000',
   user_name:            ENV["EMAIL_ADDRESS"],
   password:             ENV["EMAIL_PASSWORD"],
   authentication:       'plain',
