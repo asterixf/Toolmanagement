@@ -1,1 +1,23 @@
-<h1>edit wash order</h1>
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Update Wash_Order</h1>
+  <div class="registration-form">
+    <%= simple_form_for @wash_order do |f| %>
+        <h2 class="text-center">Tool: <%= @wash_order.tool.alias %>  -  <%= @wash_order.tool.sap %> </h2>
+        <ul class="list-group mb-3">
+          <li class="list-group-item">
+            Cavities:
+              <%= @wash_order.blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
+          </li>
+          <li class="list-group-item">startd_at:
+          <%= @wash_order.created_at.in_time_zone('America/Mexico_City').strftime('%m-%d-%y %H:%M:%S') %>
+          </li>
+          <li class="list-group-item">
+            Created_by: <%= @wash_order.created_by %>
+          </li>
+        </ul>
+        <%= f.input :comments, require: true %>
+        <%= f.input :status, require:true, collection: ["open", "close"] %>
+        <%= f.button :submit, "Update", class:"btn btn-primary mb-3" %>
+    <% end %>
+  </div>
+</div>

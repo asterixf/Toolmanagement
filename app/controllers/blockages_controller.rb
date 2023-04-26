@@ -2,11 +2,11 @@ class BlockagesController < ApplicationController
 
   def index
     @tools_wash = Tool.joins(:blockages)
-                      .where(blockages: { reason: "wash" })
+                      .where(blockages: { reason: "wash", status: "open" })
                       .group(:id)
                       .having("COUNT(blockages.id) >= ?", 1)
     @tools_damaged = Tool.joins(:blockages)
-                         .where(blockages: { reason: "damaged" })
+                         .where(blockages: { reason: "damaged", status: "open"})
                          .group(:id)
                          .having("COUNT(blockages.id) >= ?", 1)
   end
