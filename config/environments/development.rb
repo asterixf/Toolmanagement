@@ -9,14 +9,17 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { :host => host , protocol: 'http' }
 
 # SMTP settings for gmail
+config.action_mailer.delivery_method = :smtp
 config.action_mailer.smtp_settings = {
-  :address              => "smtp.gmail.com",
-  :port                 => 587,
-  :user_name            => ENV["EMAIL_ADDRESS"],
-  :password             => ENV["EMAIL_PASSWORD"],
-  :authentication       => "plain",
-  :enable_starttls_auto => true
-}
+  address:              'smtp.gmail.com',
+  port:                 587,
+  domain:               'localhost:3000'
+  user_name:            ENV["EMAIL_ADDRESS"],
+  password:             ENV["EMAIL_PASSWORD"],
+  authentication:       'plain',
+  enable_starttls_auto: true,
+  open_timeout:         5,
+  read_timeout:         5 }
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
