@@ -10,4 +10,5 @@ class Blockage < ApplicationRecord
   belongs_to :tool
   has_many :washables
   has_many :wash_orders, through: :washables
+  validates :cavity, :reason , presence: true
 end
