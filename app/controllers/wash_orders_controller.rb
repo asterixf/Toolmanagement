@@ -1,7 +1,18 @@
 class WashOrdersController < ApplicationController
-   before_action :set_tool, only: [:new, :create]
+  before_action :set_tool, only: [:new, :create]
+
   def index
-    @wash_orders = WashOrder.all
+    if params[:start_date] && params[:end_date]
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
+      end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
+      start_utc = start_time.utc
+      end_utc = end_time.utc
+      @wash_orders = WashOrder.where(created_at: start_utc..end_utc)
+    else
+      @wash_orders = WashOrder.all
+    end
   end
 
   def show
