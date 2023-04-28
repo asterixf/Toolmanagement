@@ -41,7 +41,7 @@ puts("Seeding database...")
       technology: Faker::ElectricalComponents.active,
       bu: "Steering",
       volume: Faker::Number.within(range: 8000..10000),
-      segment: ["HR", "MR", "HR"].sample,
+      segment: ["LV", "MV", "HV"].sample,
       customer: Faker::Company.name,
       capacity: 35,
       damaged: 0,
