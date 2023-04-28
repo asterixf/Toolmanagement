@@ -32,7 +32,12 @@ class WashOrdersController < ApplicationController
   def update
     @wash_order = WashOrder.find(params[:id])
     if @wash_order.update(washorder_paramas)
-      if @wash_order.status == "close"
+      if @wash_order.status === "close"
+        @wash_order.update(
+          closed_by: "#{current_user.name} #{current_user.lastname}",
+          closed_at: Time.now,
+          time: Time.now - @wash_order.created_at
+        )
         update_blockages_cavities
       end
       redirect_to wash_orders_path
@@ -54,7 +59,7 @@ class WashOrdersController < ApplicationController
       blockage.cavity.update(status: "released")
       update_tool_cavities
     end
-end
+  end
 
   def set_tool
     @tool = Tool.find(params[:tool_id])

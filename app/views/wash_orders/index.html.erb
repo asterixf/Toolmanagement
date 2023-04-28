@@ -9,7 +9,8 @@
     <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded centered-table">
       <thead>
         <tr>
-        <th>Date</th>
+        <th>ID</th>
+        <th>Order_Date</th>
         <th>Max_Cap</th>
         <th>Active</th>
         <th>Blocked</th>
@@ -20,6 +21,7 @@
         <th>Created_by</th>
         <th>SAP</th>
         <th>Alias</th>
+        <th>Closed_by</th>
         <th>Wash_Time</th>
         <th>Comments</th>
         </tr>
@@ -27,6 +29,7 @@
       <tbody>
       <% @wash_orders.each do |order| %>
         <tr>
+          <td><%= order.id %></td>
           <td><%= order.created_at.in_time_zone('America/Mexico_City').strftime('%m-%d-%y') %></td>
           <td><%= order.tool.capacity %></td>
           <td><%= order.active %></td>
@@ -35,14 +38,19 @@
           <td><%= order.status %></td>
           <td><%= order.created_at.in_time_zone('America/Mexico_City').strftime('%H:%M:%S') %></td>
           <td>
-            <% if order.status === "closed" %>
-              <%= order.updated_at %>
+            <% if order.status === "close" %>
+              <%= order.updated_at.in_time_zone('America/Mexico_City').strftime('%H:%M:%S') %>
             <% end %>
           </td>
           <td><%= order.created_by %></td>
           <td><%= order.tool.sap %></td>
           <td><%= order.tool.alias %></td>
-          <td><%= order.wash_time %></td>
+          <td><%= order.closed_by %></td>
+          <td>
+            <% if order.time.present? %>
+            <%= Time.at(order.time).utc.strftime("%H:%M:%S") %>
+            <% end %>
+          </td>
           <td><%= order.comments %></td>
         </tr>
       <% end %>
