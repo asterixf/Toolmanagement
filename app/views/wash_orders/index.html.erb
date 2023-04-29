@@ -59,7 +59,7 @@
             <td><%= order.closed_by %></td>
             <td>
               <% if order.time.present? %>
-              <%= Time.at(order.time).utc.strftime("%H:%M:%S") %>
+              <%= Time.at(order.time).strftime("%H:%M:%S") %>
               <% end %>
             </td>
             <td><%= order.comments %></td>
