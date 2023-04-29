@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_28_011606) do
+ActiveRecord::Schema[7.0].define(version: 2023_04_29_161010) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -65,6 +65,27 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_011606) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["tool_id"], name: "index_cavities_on_tool_id"
+  end
+
+  create_table "damage_reports", force: :cascade do |t|
+    t.bigint "blockage_id", null: false
+    t.bigint "cavity_id", null: false
+    t.string "created_by"
+    t.string "machine_num"
+    t.string "shift"
+    t.string "operator"
+    t.string "bcl"
+    t.string "process_eng"
+    t.string "damaged_part"
+    t.text "description"
+    t.text "cause"
+    t.text "comments"
+    t.string "status"
+    t.string "closed_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blockage_id"], name: "index_damage_reports_on_blockage_id"
+    t.index ["cavity_id"], name: "index_damage_reports_on_cavity_id"
   end
 
   create_table "production_orders", force: :cascade do |t|
@@ -150,6 +171,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_28_011606) do
   add_foreign_key "blockages", "cavities"
   add_foreign_key "blockages", "tools"
   add_foreign_key "cavities", "tools"
+  add_foreign_key "damage_reports", "blockages"
+  add_foreign_key "damage_reports", "cavities"
   add_foreign_key "production_orders", "tools"
   add_foreign_key "washables", "blockages"
   add_foreign_key "washables", "wash_orders"

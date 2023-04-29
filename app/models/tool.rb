@@ -11,6 +11,7 @@ class Tool < ApplicationRecord
   has_many :cavities, dependent: :destroy
   has_many :blockages, dependent: :destroy
   has_one :production_order, dependent: :destroy
+  has_many :damage_reports, through: :cavities
   validates(
     :alias,
     :sap,

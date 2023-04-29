@@ -46,8 +46,8 @@ class WashOrdersController < ApplicationController
       if @wash_order.status === "close"
         @wash_order.update(
           closed_by: "#{current_user.name} #{current_user.lastname}",
-          closed_at: Time.now,
-          time: Time.now - @wash_order.created_at
+          closed_at: Time.current,
+          time: Time.current - @wash_order.created_at
         )
         update_blockages_cavities
       end

@@ -38,7 +38,7 @@
         </div>
         <div class="card-body overflow-auto">
           <ul class="list-group list-group-flush">
-            <% tool.blockages.where(reason: "damaged").each do |blockage| %>
+            <% tool.blockages.where(reason: "damaged", status:"open").each do |blockage| %>
               <li class="list-group-item">
                 <strong>Cavity:</strong> <%= blockage.cavity.num %>
                 <br>
