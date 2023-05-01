@@ -11,11 +11,17 @@ class PagesController < ApplicationController
     @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)&.round(2) || 0
   end
 
-  def washorders
-    @wash_orders = WashOrder.all
+  def wo_blockages
+    @tools_wash = Tool.joins(:blockages)
+    .where(blockages: { reason: "wash", status: "open" })
+    .group(:id)
+    .having("COUNT(blockages.id) >= ?", 1)
   end
 
-  def damagedtools
-    @damaged_tools = Tool.where(status: "Damaged")
+  def d_blockages
+    @tools_damaged = Tool.joins(:blockages)
+                         .where(blockages: { reason: "damaged", status: "open"})
+                         .group(:id)
+                         .having("COUNT(blockages.id) >= ?", 1)
   end
 end

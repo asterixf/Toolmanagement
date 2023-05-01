@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   root to: "pages#home"
 
   get 'dashboard', to: 'pages#dashboard'
-  get 'dashboard', to: 'pages#washorders'
-  get 'dashboard', to: 'pages#damagedtools'
+  get 'wo_blockages', to: 'pages#wo_blockages'
+  get 'd_blockages', to: 'pages#d_blockages'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :tools, only: [:index, :new, :create, :show, :edit, :update] do
     resources :cavities, only: [:new, :create]
