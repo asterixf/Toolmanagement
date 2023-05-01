@@ -32,7 +32,7 @@ class WashOrdersController < ApplicationController
     @blockages = @tool.blockages.where(reason: "wash", status: "open")
     @wash_order.blockages = @blockages
     if @wash_order.save
-      redirect_to tools_path
+      redirect_to wo_blockages_path
     else
       render :new, status: :unprocessable_entity
     end
