@@ -10,4 +10,12 @@ class PagesController < ApplicationController
     @steering_availability = Tool.where(bu: "Steering").average(:available)&.round(2) || 0
     @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)&.round(2) || 0
   end
+
+  def washorders
+    @wash_orders = WashOrder.all
+  end
+
+  def damagedtools
+    @damaged_tools = Tool.where(status: "Damaged")
+  end
 end

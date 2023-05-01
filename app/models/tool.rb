@@ -3,7 +3,7 @@ require 'csv'
 class Tool < ApplicationRecord
   include PgSearch::Model
   pg_search_scope :search_by_params,
-      against: [:alias, :sap, :customer, :location, :bu, :segment],
+      against: [:alias, :sap, :customer, :location, :bu, :segment, :technology],
       using: {
       tsearch: { prefix: true }
       }

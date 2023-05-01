@@ -11,7 +11,9 @@ class WashOrdersController < ApplicationController
       end_utc = end_time.utc
       @wash_orders = WashOrder.where(created_at: start_utc..end_utc)
     else
-      @wash_orders = WashOrder.all
+      start_time = Time.current.in_time_zone("Central Time (US & Canada)").beginning_of_month
+      end_time = Time.current.in_time_zone("Central Time (US & Canada)").end_of_month.end_of_day
+      @wash_orders = WashOrder.where(created_at: start_time..end_time)
     end
   end
 
