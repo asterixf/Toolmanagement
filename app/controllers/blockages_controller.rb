@@ -23,7 +23,7 @@ class BlockagesController < ApplicationController
     set_blockage_values
     if @blockage.save
       update_cavities_in_tool
-      redirect_to blockages_path
+      redirect_to wo_blockages_path
     else
       render :new, status: :unprocessable_entity
     end
