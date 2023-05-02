@@ -1,6 +1,26 @@
 class DamageReportsController < ApplicationController
   before_action :set_tool, only: [:new, :create]
 
+  def show
+    @damage_report = DamageReport.find(params[:id])
+  end
+
+  def index
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
+      end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
+      start_utc = start_time.utc
+      end_utc = end_time.utc
+      @damage_reports = DamageReport.where(created_at: start_utc..end_utc)
+    else
+      start_time = Time.current.in_time_zone("Central Time (US & Canada)").beginning_of_month
+      end_time = Time.current.in_time_zone("Central Time (US & Canada)").end_of_month.end_of_day
+      @damage_reports = DamageReport.where(created_at: start_time..end_time)
+    end
+  end
+
   def new
     @damage_report = DamageReport.new
     @blockages = @tool.blockages.where(reason: "damaged", status: "open")
@@ -31,7 +51,7 @@ class DamageReportsController < ApplicationController
         )
         update_blockages_cavities
       end
-      redirect_to damage_report_path
+      redirect_to damage_reports_path
       flash[:notice] = "Order updated succesfully!"
     else
       render :edit, status: :unprocessable_entity
@@ -62,7 +82,7 @@ class DamageReportsController < ApplicationController
     end
   end
   def update_tool_cavities
-    tool = @wash_order.tool
+    tool = @damage_report.tool
     blocked = tool.cavities.where(status: "blocked").count
     damaged = tool.cavities.where(status: "damaged").count
     active = tool.cavities.where(status: "released", is_spare: false).count

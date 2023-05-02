@@ -1,11 +1,11 @@
 <div class="container my-3">
   <h1 class="text-center fw-bold">New Damage Report</h1>
   <div class="registration-form">
-    <%= simple_form_for [@tool, @damage_report] do |f| %>
-        <h2 class="text-center">Tool: <%= @tool.alias %> </h2>
+    <%= simple_form_for @damage_report do |f| %>
+        <h2 class="text-center">Tool: <%= @damage_report.tool.alias %> </h2>
         <p>
           Cavities:
-            <%= @blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
+            <%= @damage_report.blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
         </p>
         <%= f.input :machine_num, label:"Machine_Number", require: true %>
         <%= f.input :shift, require: true %>
@@ -17,6 +17,9 @@
         <%= f.input :cause, label:"Possible_Cause", require: true %>
         <%= f.input :comments, require: true %>
         <%= f.input :status, require: true, collection: ["open", "close"]%>
+        <div class="form-alert p-3 my-3">
+          <p class="fw-bold text-center"> Closing the report will release the cavities, You can make them unavailable from Tool &gt; edit</p>
+        </div>
         <%= f.button :submit, "Update", class:"btn btn-primary mb-3 fw-bold" %>
     <% end %>
   </div>
