@@ -20,8 +20,6 @@ Rails.application.routes.draw do
 
   resources :cavities, only: [:edit, :update]
 
-  resources :blockages, only: [:index, :edit]
-
   resources :wash_orders, only: [:index, :show, :edit, :update]
 
   resources :damage_reports, only: [:index, :show, :edit, :update]

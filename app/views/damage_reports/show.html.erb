@@ -1,0 +1,24 @@
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Damage Report</h1>
+  <div class="registration-form">
+      <form action="">
+        <h2 class="text-center">Tool: <%= @damage_report.tool.alias %> </h2>
+        <p>
+          Cavities:
+            <%= @damage_report.blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
+        </p>
+        <p><strong>Machine_Number:</strong> <%= @damage_report.machine_num %></p>
+        <p><strong>Shift:</strong> <%= @damage_report.shift %></p>
+        <p><strong>Operator:</strong> <%= @damage_report.operator %></p>
+        <p><strong>BCL:</strong> <%= @damage_report.bcl %></p>
+        <p><strong>Process_Engineer:</strong> <%= @damage_report.process_eng %></p>
+        <p><strong>Damaged_Part:</strong> <%= @damage_report.damaged_part %></p>
+        <p><strong>Incident_Description:</strong> <%= @damage_report.description %></p>
+        <p><strong>Possible_Cause:</strong> <%= @damage_report.cause %></p>
+        <p><strong>Comments:</strong> <%= @damage_report.comments %></p>
+        <p><strong>Status:</strong> <%= @damage_report.status %></p>
+        <p><strong>Created_by:</strong> <%= @damage_report.created_by %></p>
+        <p><strong>Closed_by:</strong> <%= @damage_report.closed_by %></p>
+    </form>
+  </div>
+</div>

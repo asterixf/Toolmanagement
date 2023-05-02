@@ -1,16 +1,5 @@
 class BlockagesController < ApplicationController
 
-  def index
-    @tools_wash = Tool.joins(:blockages)
-                      .where(blockages: { reason: "wash", status: "open" })
-                      .group(:id)
-                      .having("COUNT(blockages.id) >= ?", 1)
-    @tools_damaged = Tool.joins(:blockages)
-                         .where(blockages: { reason: "damaged", status: "open"})
-                         .group(:id)
-                         .having("COUNT(blockages.id) >= ?", 1)
-  end
-
   def new
     @tool = Tool.find(params[:tool_id])
     @blockage = Blockage.new
@@ -24,7 +13,11 @@ class BlockagesController < ApplicationController
     if @blockage.save
       wash_damaged_present
       update_cavities_in_tool
+      if @blockage.reason == "wash"
       redirect_to wo_blockages_path
+      elsif @blockage.reason == "damaged"
+        redirect_to d_blockages_path
+      end
     else
       render :new, status: :unprocessable_entity
     end

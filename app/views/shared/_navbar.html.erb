@@ -22,8 +22,8 @@
         <%= link_to "Dashboard", dashboard_path, class: "nav-link #{' active' if current_page?(dashboard_path)}" %>
         <%= link_to "Tools", tools_path, class: "nav-link#{' active' if current_page?(tools_path)}" %>
         <%= link_to "New_Tool", new_tool_path, class: "nav-link#{' active' if current_page?(new_tool_path)}" %>
-        <%= link_to "Blockages", blockages_path, class: "nav-link#{' active' if current_page?(blockages_path)}" %>
         <%= link_to "Wash_Orders", wash_orders_path, class: "nav-link#{' active' if current_page?(wash_orders_path)}" %>
+        <%= link_to "Damage_Reports", damage_reports_path, class: "nav-link#{' active' if current_page?(damage_reports_path)}" %>
         <% if current_user.admin %>
           <%= link_to "Users", users_path, class: "nav-link#{' active' if current_page?(users_path)}" %>
         <% end %>
