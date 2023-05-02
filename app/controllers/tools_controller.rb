@@ -5,11 +5,14 @@ class ToolsController < ApplicationController
     else
       @tools = Tool.all.order(location: :asc)
     end
-    @average_availability = @tools.average(:available)
     respond_to do |format|
       format.html
       format.csv { send_data to_csv(@tools), filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
     end
+    @average_availability = Tool.all.average(:available)&.round(2) || 0
+    @damper_availability = Tool.where(bu: "Damper").average(:available)&.round(2) || 0
+    @steering_availability = Tool.where(bu: "Steering").average(:available)&.round(2) || 0
+    @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)&.round(2) || 0
   end
 
   def show

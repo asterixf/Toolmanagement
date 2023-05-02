@@ -10,7 +10,8 @@
       </form>
     </div>
     <p class= "text-end" style="font-size: 12px">*Default values are set to this month, please enter dates for custom search.</p>
-  </div>
+    </div>
+    <%= link_to "Export WO CSV", wash_orders_path(format: :csv), class:"btn btn-primary btn-sm align-self-end" %>
   <% if @wash_orders.empty? %>
     <div class="my-3">
       <h1 class="fw-bold text-center">No Orders found</h1>
