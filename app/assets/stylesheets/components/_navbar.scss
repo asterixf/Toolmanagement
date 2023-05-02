@@ -8,8 +8,14 @@
 }
 
 .nav-link{
-  color: #042e58 !important;
+  // color: #042e58 !important;
   font-weight: bold;
+}
+
+.active{
+  text-decoration: underline;
+  background-color: #b4b4b4;
+  padding: 14px;
 }
 
 

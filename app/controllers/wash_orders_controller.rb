@@ -2,7 +2,7 @@ class WashOrdersController < ApplicationController
   before_action :set_tool, only: [:new, :create]
 
   def index
-    if params[:start_date] && params[:end_date]
+    if params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
       start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
@@ -67,7 +67,7 @@ class WashOrdersController < ApplicationController
   end
 
   def update_blockages_cavities
-    @wash_order.blockages.where(reason: "wash").each do |blockage|
+    @wash_order.blockages.where(reason: "wash", status: "open").each do |blockage|
       blockage.update(status: "close", last_updated_by: "#{current_user.id}-#{current_user.name} #{current_user.lastname}")
       blockage.cavity.update(status: "released")
       update_tool_cavities

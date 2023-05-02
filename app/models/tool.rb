@@ -11,7 +11,7 @@ class Tool < ApplicationRecord
   has_many :cavities, dependent: :destroy
   has_many :blockages, dependent: :destroy
   has_one :production_order, dependent: :destroy
-  has_many :damage_reports, through: :cavities
+  has_many :damage_reports
   validates(
     :alias,
     :sap,
@@ -32,14 +32,13 @@ class Tool < ApplicationRecord
   validate :layout_mime_type
 
   def update_available
-    update(available: (active * 100) / capacity)
+    update(available: ((active * 100) / capacity.to_f).round(2))
   end
 
   private
 
   def layout_mime_type
     return unless layout.attached?
-
     if layout.attached? && !layout.content_type.in?(%w(application/pdf))
       errors.add(:layout, 'must be a PDF')
     end

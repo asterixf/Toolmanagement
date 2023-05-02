@@ -11,22 +11,23 @@
     <% if user_signed_in? %>
       <div class="navbar-nav">
         <div class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link <%=' active' if current_page?(wo_blockages_path) || current_page?(d_blockages_path)%> dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Active_Blockages
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Wash", wo_blockages_path, class:"nav-link active" %></li>
-            <li><%= link_to "Damaged", d_blockages_path, class:"nav-link active" %></li>
-          </div>
-        <%= link_to "Dashboard", dashboard_path , class:"nav-link active" %>
-        <%= link_to "Tools", tools_path, class:"nav-link active" %>
-        <%= link_to "New_Tool", new_tool_path, class:"nav-link active" %>
-        <%= link_to "Blockages", blockages_path, class:"nav-link active" %>
-        <%= link_to "Wash", wash_orders_path, class:"nav-link active" %>
+            <li><%= link_to "Wash", wo_blockages_path, class: "nav-link#{' active' if current_page?(wo_blockages_path)}" %></li>
+            <li><%= link_to "Damaged", d_blockages_path, class: "nav-link#{' active' if current_page?(d_blockages_path)}" %></li>
+          </ul>
+        </div>
+        <%= link_to "Dashboard", dashboard_path, class: "nav-link #{' active' if current_page?(dashboard_path)}" %>
+        <%= link_to "Tools", tools_path, class: "nav-link#{' active' if current_page?(tools_path)}" %>
+        <%= link_to "New_Tool", new_tool_path, class: "nav-link#{' active' if current_page?(new_tool_path)}" %>
+        <%= link_to "Blockages", blockages_path, class: "nav-link#{' active' if current_page?(blockages_path)}" %>
+        <%= link_to "Wash_Orders", wash_orders_path, class: "nav-link#{' active' if current_page?(wash_orders_path)}" %>
         <% if current_user.admin %>
-          <%= link_to "Users", users_path, class:"nav-link active" %>
+          <%= link_to "Users", users_path, class: "nav-link#{' active' if current_page?(users_path)}" %>
         <% end %>
-        <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class:"nav-link active" %>
+        <%= link_to "Log out", destroy_user_session_path, data: {turbo_method: :delete}, class:"nav-link" %>
       </div>
     <% else %>
       <div class="navbar-nav">

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :production_orders, only: [:new, :create]
     resources :blockages, only: [:new, :create]
     resources :wash_orders, only: [:new, :create]
+    resources :damage_reports, only: [:new, :create]
   end
 
   resources :production_orders, only: [:edit, :update]
@@ -22,5 +23,7 @@ Rails.application.routes.draw do
   resources :blockages, only: [:index, :edit]
 
   resources :wash_orders, only: [:index, :show, :edit, :update]
+
+  resources :damage_reports, only: [:index, :show, :edit, :update]
 
 end

@@ -19,6 +19,9 @@ class PagesController < ApplicationController
   end
 
   def d_blockages
-    @damage_blockages = Blockage.where(reason: "damaged", status: "open")
+    @tools_damaged = Tool.joins(:blockages)
+    .where(blockages: { reason: "damaged", status: "open"})
+    .group(:id)
+    .having("COUNT(blockages.id) >= ?", 1)
   end
 end
