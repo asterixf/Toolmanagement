@@ -9,7 +9,9 @@ class Blockage < ApplicationRecord
   belongs_to :cavity
   belongs_to :tool
   has_many :washables
+  has_many :damages
   has_many :wash_orders, through: :washables
+  has_many :blockage_reports, through: :damages
   has_many :damage_reports
   validates :cavity, :reason , presence: true
 end

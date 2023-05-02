@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_04_29_161010) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_01_211619) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -68,8 +68,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_161010) do
   end
 
   create_table "damage_reports", force: :cascade do |t|
-    t.bigint "blockage_id", null: false
-    t.bigint "cavity_id", null: false
     t.string "created_by"
     t.string "machine_num"
     t.string "shift"
@@ -84,8 +82,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_161010) do
     t.string "closed_by"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["blockage_id"], name: "index_damage_reports_on_blockage_id"
-    t.index ["cavity_id"], name: "index_damage_reports_on_cavity_id"
+    t.bigint "tool_id", null: false
+    t.index ["tool_id"], name: "index_damage_reports_on_tool_id"
+  end
+
+  create_table "damages", force: :cascade do |t|
+    t.bigint "blockage_id", null: false
+    t.bigint "damage_report_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["blockage_id"], name: "index_damages_on_blockage_id"
+    t.index ["damage_report_id"], name: "index_damages_on_damage_report_id"
   end
 
   create_table "production_orders", force: :cascade do |t|
@@ -161,7 +168,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_161010) do
     t.bigint "blockage_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "status"
     t.index ["blockage_id"], name: "index_washables_on_blockage_id"
     t.index ["wash_order_id"], name: "index_washables_on_wash_order_id"
   end
@@ -171,8 +177,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_04_29_161010) do
   add_foreign_key "blockages", "cavities"
   add_foreign_key "blockages", "tools"
   add_foreign_key "cavities", "tools"
-  add_foreign_key "damage_reports", "blockages"
-  add_foreign_key "damage_reports", "cavities"
+  add_foreign_key "damage_reports", "tools"
+  add_foreign_key "damages", "blockages"
+  add_foreign_key "damages", "damage_reports"
   add_foreign_key "production_orders", "tools"
   add_foreign_key "washables", "blockages"
   add_foreign_key "washables", "wash_orders"

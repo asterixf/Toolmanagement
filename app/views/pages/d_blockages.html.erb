@@ -1,26 +1,28 @@
 <div class="container my-3 mx-auto">
-  <h1 class="text-center fw-bold">Active Blockages Damage</h1>
+  <h1 class="text-center fw-bold">Active Blockages Damages</h1>
     <div class="cards my-5 ">
-    <% @damage_blockages.each do  |blockage|%>
-        <div class="card shadow p-3 m-1 bg-body-tertiary rounded" style="width: 25rem; height: 15rem">
+    <% @tools_damaged.each do  |tool|%>
+        <div class="card shadow p-3 m-1 bg-body-tertiary rounded" style="width: 25rem; height: 20rem">
           <div class="card-header">
-            <strong>Tool Alias:</strong> <%= blockage.tool.alias %>
-            <strong>Tool SAP:</strong> <%= blockage.tool.sap %>
+            <strong>Tool Alias:</strong> <%= tool.alias %>
+            <strong>Tool SAP:</strong> <%= tool.sap %>
           </div>
           <div class="card-body overflow-auto">
             <ul class="list-group list-group-flush">
+              <% tool.blockages.where(reason: "damaged", status: "open").each do |blockage| %>
                 <li class="list-group-item">
                   <strong>Cavity:</strong> <%= blockage.cavity.num %>
                   <br>
                   <span style="font-size: x-small;">Created_by:<%= blockage.created_by %></span>
                 </li>
+              <% end %>
             </ul>
           </div>
           <div class="card-footer">
-          <% if blockage.tool.damage_reports.any?{|report| report.status == "open"} %>
-           link to update
+          <% if tool.damage_reports.any?{|order| order.status == "open"} %>
+            <%= link_to "update", edit_damage_report_path(tool.damage_reports.find_by(status: "open")), class:"btn btn-danger fw-bold" %>
           <% else %>
-            link to create report
+            <%= link_to "Create_Report", new_tool_damage_report_path(tool), class:"btn btn-primary fw-bold" %>
           <% end %>
           </div>
         </div>
