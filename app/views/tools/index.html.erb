@@ -1,4 +1,44 @@
 <div class="mt-2 mx-4">
+  <div>
+    <div class="cards my-5">
+      <% if @damper_availability <= 70 %>
+        <div class="card-category row text-center mx-1 bg-danger">
+      <% elsif @damper_availability < 90 %>
+        <div class="card-category row text-center mx-1 bg-warning">
+      <% else %>
+        <div class="card-category row text-center mx-1 bg-success">
+      <% end %>
+          <div class="col align-self-center">
+            <h1><%= @damper_availability.round(2) %>%</h1>
+            <p class="fw-bold">Damper Availability</p>
+          </div>
+        </div>
+      <% if @steering_availability <= 70 %>
+        <div class="card-category row text-center mx-1 bg-danger">
+      <% elsif @steering_availability < 90 %>
+        <div class="card-category row text-center mx-1 bg-warning">
+      <% else %>
+        <div class="card-category row text-center mx-1 bg-success">
+      <% end %>
+          <div class="col align-self-center">
+            <h1><%= @steering_availability.round(2) %>%</h1>
+            <p class="fw-bold">Steering Availability</p>
+          </div>
+        </div>
+      <% if @low_volume_availability <= 70 %>
+        <div class="card-category row text-center mx-1 bg-danger">
+      <% elsif @low_volume_availability < 90 %>
+        <div class="card-category row text-center mx-1 bg-warning">
+      <% else %>
+        <div class="card-category row text-center mx-1 bg-success">
+      <% end %>
+          <div class="col align-self-center">
+            <h1><%= @low_volume_availability.round(2) %>%</h1>
+            <p class="fw-bold">Low_Volume Availability</p>
+          </div>
+        </div>
+    </div>
+  </div>
   <% if @tools.empty? %>
     <div class="my-3">
       <h1 class="fw-bold text-center">No tools found</h1>
