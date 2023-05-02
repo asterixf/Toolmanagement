@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, :path_prefix => 'd'
 
-  resources :users, only: [:index, :show, :edit, :update]
+  resources :users, only: [:index, :show, :edit, :update, :new, :create]
   root to: "pages#home"
 
   get 'wo_blockages', to: 'pages#wo_blockages'
