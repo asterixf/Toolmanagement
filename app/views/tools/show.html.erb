@@ -165,6 +165,16 @@
         </td>
         </tr>
         <tr>
+        <td class="fw-bold">
+        Spare Cavities:
+        </td>
+        <td>
+          <% if @tool.cavities %>
+            <%= @tool.cavities.select { |c| c.is_spare }.map { |c| c.num }.join(", ") %>
+          <% end %>
+        </td>
+        </tr>
+        <tr>
           <td style="font-size: 12px;">
             Created by: <%= @tool.created_by %>
           </td>
@@ -181,18 +191,20 @@
         <%= simple_form_for [@tool,@cavity] do |f| %>
           <%= f.input :num , require: true %>
           <%= f.input :status, require: true, collection: ["released", "unavail"] %>
+          <%= f.input :comments %>
           <%= f.input :is_spare, label: "Is spare" %>
           <%= f.button :submit, "Add_Cavity", class:"btn btn-primary mb-3" %>
         <% end %>
       </div>
-    <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary">
+    <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary text-center">
       <thead>
         <tr>
           <th>Cavity Number</th>
           <th>Cavity Status</th>
           <th>Spare</th>
-          <th>Created By</th>
-          <th>Last Updated By</th>
+          <th>Created_By</th>
+          <th>Updated_By</th>
+          <th>View</th>
         </tr>
       </thead>
   <% if !@tool.cavities.empty? %>
@@ -211,6 +223,11 @@
               <td><%= cavity.is_spare ? 'Yes' : 'No' %></td>
               <td><%= cavity.created_by %></td>
               <td><%= cavity.last_updated_by %></td>
+              <td>
+                <%= link_to cavity_path(cavity) do %>
+                  <i class="fa-solid fa-eye"></i>
+                <% end %>
+              </td>
             </tr>
           <% end %>
         <% end %>

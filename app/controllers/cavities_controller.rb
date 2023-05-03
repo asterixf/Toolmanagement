@@ -4,6 +4,10 @@ class CavitiesController < ApplicationController
     @cavities = Cavity.all
   end
 
+  def show
+    @cavity = Cavity.find(params[:id])
+  end
+
   def new
     @cavity = Cavity.new
   end
@@ -30,7 +34,7 @@ class CavitiesController < ApplicationController
   def update
     @cavity = Cavity.find(params[:id])
     @tool = @cavity.tool
-    @cavity.last_updated_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
+    @cavity.last_updated_by = "#{current_user.name} #{current_user.lastname}"
     if @cavity.update(cavity_params)
       update_active_spares
       @tool.update_available
@@ -42,7 +46,7 @@ class CavitiesController < ApplicationController
   private
 
   def cavity_params
-    params.require(:cavity).permit(:num, :is_spare, :status)
+    params.require(:cavity).permit(:num, :is_spare, :status, :comments)
   end
 
   def set_tool
