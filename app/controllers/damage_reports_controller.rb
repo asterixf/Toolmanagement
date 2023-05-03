@@ -61,7 +61,7 @@ class DamageReportsController < ApplicationController
   private
 
   def damagereport_paramas
-    params.require(:damage_report).permit(:machine_num, :shift, :operator, :bcl, :process_eng, :damaged_part, :description, :cause, :comments, :status)
+    params.require(:damage_report).permit(:machine_num, :shift, :quality, :operator, :bcl, :process_eng, :damaged_part, :description, :cause, :comments, :status)
   end
 
   def set_tool

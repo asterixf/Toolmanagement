@@ -150,7 +150,7 @@
         </td>
         <td>
           <% if @tool.cavities %>
-            <%= @tool.cavities.select { |c| c.status == 'released' }.map { |c| c.num }.join(", ") %>
+            <%= @tool.cavities.select { |c| c.status === 'released' && !c.is_spare }.map { |c| c.num }.join(", ") %>
           <% end %>
         </td>
         </tr>
