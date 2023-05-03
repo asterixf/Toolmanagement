@@ -1,0 +1,16 @@
+<div class="container my-3">
+  <div class="registration-form">
+    <form>
+      <h1 class= "fw-bold">Edit Cavity: <%= @cavity.num %></h1>
+      <h2>Tool: <%= @cavity.tool.alias %></h2>
+      <p><strong>Created:</strong>
+      <%= @cavity.created_at.in_time_zone('America/Mexico_City').strftime('%Y-%m-%d %H:%M:%S %Z') %>
+      </p>
+      <p><strong>Created_by:</strong> <%= @cavity.created_by %></p>
+      <p><strong>Last_Updated_by:</strong> <%= @cavity.last_updated_by %></p>
+      <p><strong>Spare:</strong> <%= @cavity.is_spare ? "Yes" : "No" %></p>
+      <p><strong>Status: <%= @cavity.status %></strong></p>
+      <p><strong>Comments:</strong><%= @cavity.comments %></p>
+    </form>
+  </div>
+</div>

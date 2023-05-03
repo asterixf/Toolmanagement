@@ -17,7 +17,7 @@ Rails.application.routes.draw do
 
   resources :production_orders, only: [:edit, :update]
 
-  resources :cavities, only: [:edit, :update]
+  resources :cavities, only: [:edit, :update, :show]
 
   resources :wash_orders, only: [:index, :show, :edit, :update]
 
