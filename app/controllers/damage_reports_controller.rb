@@ -23,14 +23,11 @@ class DamageReportsController < ApplicationController
 
   def new
     @damage_report = DamageReport.new
-    @blockages = @tool.blockages.where(reason: "damaged", status: "open")
   end
 
   def create
     @damage_report = DamageReport.new(damagereport_paramas)
     set_damage_report_values
-    @blockages = @tool.blockages.where(reason: "damaged", status: "open")
-    @damage_report.blockages = @blockages
     if @damage_report.save
       redirect_to d_blockages_path
     else
@@ -49,7 +46,6 @@ class DamageReportsController < ApplicationController
         @damage_report.update(
           closed_by: "#{current_user.name} #{current_user.lastname}"
         )
-        update_blockages_cavities
       end
       redirect_to damage_reports_path
       flash[:notice] = "Order updated succesfully!"
@@ -72,21 +68,5 @@ class DamageReportsController < ApplicationController
     @damage_report.tool = @tool
     @damage_report.created_by = "#{current_user.name} #{current_user.lastname}"
     @damage_report.status = "open"
-  end
-
-  def update_blockages_cavities
-    @damage_report.blockages.where(reason: "damaged", status: "open").each do |blockage|
-      blockage.update(status: "close", last_updated_by: "#{current_user.id}-#{current_user.name} #{current_user.lastname}")
-      blockage.cavity.update(status: "released")
-      update_tool_cavities
-    end
-  end
-  def update_tool_cavities
-    tool = @damage_report.tool
-    blocked = tool.cavities.where(status: "blocked").count
-    damaged = tool.cavities.where(status: "damaged").count
-    active = tool.cavities.where(status: "released", is_spare: false).count
-    tool.update(active: active, blocked: blocked, damaged: damaged)
-    tool.update_available
   end
 end
