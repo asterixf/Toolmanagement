@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update, :new, :create]
   root to: "pages#home"
 
-  get 'wo_blockages', to: 'pages#wo_blockages'
-  get 'd_blockages', to: 'pages#d_blockages'
+  # get 'wo_blockages', to: 'pages#wo_blockages'
+  # get 'd_blockages', to: 'pages#d_blockages'
+  get 'tools/production', to: 'tools#production'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :tools, only: [:index, :new, :create, :show, :edit, :update] do
     resources :cavities, only: [:new, :create]

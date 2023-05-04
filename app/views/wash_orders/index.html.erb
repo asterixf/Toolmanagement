@@ -9,7 +9,7 @@
         <button type="submit" class="btn btn-primary">Filter</button>
       </form>
     </div>
-    <p class= "text-end" style="font-size: 12px">*Default values are set to this month, please enter dates for custom search.</p>
+    <p class= "text-end" style="font-size: 12px">*Today's Orders, enter date range for custom view</p>
     </div>
     <%= link_to "Export WO CSV", wash_orders_path(format: :csv), class:"btn btn-primary btn-sm align-self-end" %>
   <% if @wash_orders.empty? %>

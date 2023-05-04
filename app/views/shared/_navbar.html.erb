@@ -11,16 +11,25 @@
     <% if user_signed_in? %>
       <div class="navbar-nav">
         <div class="nav-item dropdown">
-          <a class="nav-link <%=' active' if current_page?(wo_blockages_path) || current_page?(d_blockages_path)%> dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Active_Blockages
+          <a class="nav-link <%=' active' if current_page?(tools_path) || current_page?(tools_production_path) || current_page?(new_tool_path)%>
+          dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Tools
           </a>
           <ul class="dropdown-menu">
-            <li><%= link_to "Wash", wo_blockages_path, class: "nav-link#{' active' if current_page?(wo_blockages_path)}" %></li>
-            <li><%= link_to "Damaged", d_blockages_path, class: "nav-link#{' active' if current_page?(d_blockages_path)}" %></li>
+            <li><%= link_to "All", tools_path, class: "nav-link#{' active' if current_page?(tools_path)}" %></li>
+            <li><%= link_to "Production", tools_production_path , class: "nav-link#{' active' if current_page?(tools_production_path)}" %></li>
+            <li><%= link_to "New_Tool", new_tool_path, class: "nav-link#{' active' if current_page?(new_tool_path)}" %></li>
           </ul>
         </div>
-        <%= link_to "Tools", tools_path, class: "nav-link#{' active' if current_page?(tools_path)}" %>
-        <%= link_to "New_Tool", new_tool_path, class: "nav-link#{' active' if current_page?(new_tool_path)}" %>
+        <div class="nav-item dropdown">
+          <a class="nav-link <%#=' active' if current_page?(wo_blockages_path) || current_page?(d_blockages_path)%> dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Blockages
+          </a>
+          <ul class="dropdown-menu">
+            <%# <li><%#= link_to "Wash", wo_blockages_path, class: "nav-link#{' active' if current_page?(wo_blockages_path)}" %></li>
+            <li><%#= link_to "Damaged", d_blockages_path, class: "nav-link#{' active' if current_page?(d_blockages_path)}" %></li> %>
+          </ul>
+        </div>
         <%= link_to "Wash_Orders", wash_orders_path, class: "nav-link#{' active' if current_page?(wash_orders_path)}" %>
         <%= link_to "Damage_Reports", damage_reports_path, class: "nav-link#{' active' if current_page?(damage_reports_path)}" %>
         <% if current_user.admin %>

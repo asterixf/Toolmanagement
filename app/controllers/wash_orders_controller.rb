@@ -7,12 +7,11 @@ class WashOrdersController < ApplicationController
       end_date = Date.parse(params[:end_date])
       start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
       end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
-      start_utc = start_time.utc
-      end_utc = end_time.utc
-      @wash_orders = WashOrder.where(created_at: start_utc..end_utc)
+      @wash_orders = WashOrder.where(created_at: start_time..end_time)
     else
-      start_time = Time.current.in_time_zone("Central Time (US & Canada)").beginning_of_month
-      end_time = Time.current.in_time_zone("Central Time (US & Canada)").end_of_month.end_of_day
+      today = Time.current
+      start_time = today.beginning_of_day
+      end_time = today.end_of_day
       @wash_orders = WashOrder.where(created_at: start_time..end_time)
     end
     respond_to do |format|
@@ -33,7 +32,8 @@ class WashOrdersController < ApplicationController
     @wash_order = WashOrder.new(washorder_paramas)
     set_wash_order_values
     if @wash_order.save
-      redirect_to wo_blockages_path
+      @tool.update(location:"washing")
+      redirect_to tools_production_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -47,32 +47,18 @@ class WashOrdersController < ApplicationController
     @wash_order = WashOrder.find(params[:id])
     if @wash_order.update(washorder_paramas)
       if @wash_order.status === "close"
+        @wash_order.tool.update(location:"production")
         @wash_order.update(
           closed_by: "#{current_user.name} #{current_user.lastname}",
           closed_at: Time.current,
           time: Time.current - @wash_order.created_at
         )
       end
-      redirect_to wash_orders_path
+      redirect_to tools_production_path
       flash[:notice] = "Order updated succesfully!"
     else
       render :edit, status: :unprocessable_entity
     end
-  end
-
-  def download_csv
-    if params[:report_start_date].present? && params[:report_end_date].present?
-      start_date = Date.parse(params[:report_start_date])
-      end_date = Date.parse(params[:report_end_date])
-      start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
-      end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
-      start_utc = start_time.utc
-      end_utc = end_time.utc
-    end
-    respond_to do |format|
-      format.csv { send_data download_washorder_report(start_utc, end_utc), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
-    end
-    raise
   end
 
   private
@@ -87,8 +73,10 @@ class WashOrdersController < ApplicationController
 
   def set_wash_order_values
     @wash_order.tool = @tool
+    @wash_order.active = @tool.active
+    @wash_order.blocked = @tool.blocked
+    @wash_order.damaged = @tool.damaged
     @wash_order.created_by = "#{current_user.name} #{current_user.lastname}"
-    @wash_order.active = @wash_order.tool.active
     @wash_order.status = "open"
   end
 

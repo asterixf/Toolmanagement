@@ -15,6 +15,15 @@ class ToolsController < ApplicationController
     @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)&.round(2) || 0
   end
 
+  def production
+    if params[:query].present?
+      @tools = Tool.search_by_params(params[:query]).where(location: "production").or(Tool.where(location: "washing")).order(location: :desc)
+    else
+      @tools = Tool.where(location: "production").or(Tool.where(location: "washing")).order(location: :desc)
+    end
+    @wash_orders_in_process = WashOrder.where(status: "open").count
+  end
+
   def show
     @tool = Tool.find(params[:id])
     @cavity = Cavity.new
