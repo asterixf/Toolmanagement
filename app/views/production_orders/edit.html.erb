@@ -5,7 +5,7 @@
         <h2>Tool: <%= @production_order.tool.alias %></h2>
         <%= f.input :cavities_in_tool, hint: "please enter the number of cavities in the tool", required: true %>
         <%= f.input :comments %>
-        <%= f.input :status, hint:"closing the order will send it back to stored", collection: ["open", "closed"]%>
+        <%= f.input :status, hint:"closing the order will send it back to stored", collection: ["open", "close"]%>
         <p>created by: <%= @production_order.created_by %> <%=  %></p>
         <p>Last_edited_by: <%= @production_order.last_updated_by %></p>
         <%= f.button :submit, "save", class: "btn btn-primary" %>

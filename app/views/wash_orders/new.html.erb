@@ -3,10 +3,6 @@
   <div class="registration-form">
     <%= simple_form_for [@tool, @wash_order] do |f| %>
         <h2 class="text-center">Tool: <%= @tool.alias %> </h2>
-        <p>
-          Cavities:
-            <%= @blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
-        </p>
         <%= f.input :comments, require: true %>
         <%= f.button :submit, "start_wash", class:"btn btn-primary mb-3 fw-bold" %>
     <% end %>
