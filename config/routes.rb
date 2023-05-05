@@ -6,7 +6,7 @@ Rails.application.routes.draw do
 
   get 'tools/blockages', to: 'tools#blockages_history'
   get 'tools/production', to: 'tools#production'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  # #Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :tools, only: [:index, :new, :create, :show, :edit, :update] do
     resources :cavities, only: [:new, :create]
     resources :production_orders, only: [:new, :create]
