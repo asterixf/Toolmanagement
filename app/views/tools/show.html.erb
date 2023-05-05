@@ -212,13 +212,7 @@
         <% if @cavities %>
           <% @cavities.each do |cavity| %>
             <tr>
-              <td>
-              <% if cavity.status === "released" ||  cavity.status === "unavail"  %>
-                <%= link_to cavity.num, edit_cavity_path(cavity) %>
-              <% else %>
-                <%= cavity.num %>
-              <% end %>
-              </td>
+              <td><%= link_to cavity.num, edit_cavity_path(cavity) %></td>
               <td><%= cavity.status %></td>
               <td><%= cavity.is_spare ? 'Yes' : 'No' %></td>
               <td><%= cavity.created_by %></td>

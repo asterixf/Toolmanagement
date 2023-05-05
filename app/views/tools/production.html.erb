@@ -1,65 +1,69 @@
 <div class="mt-2 mx-4">
-    <div class="row justify-content-end">
-      <div class="col-lg-4 col-md-6 my-2">
-        <%= form_with url: tools_production_path, method: :get, class: "d-flex" do %>
-          <%= text_field_tag :query,
-                params[:query],
-                class: "form-control",
-                placeholder: "Type a keyword"
-            %>
-          <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
-        <% end %>
-      </div>
+  <div class="row justify-content-end">
+    <div class="col-lg-4 col-md-6 my-2">
+      <%= form_with url: tools_production_path, method: :get, class: "d-flex" do %>
+        <%= text_field_tag :query,
+              params[:query],
+              class: "form-control",
+              placeholder: "Type a keyword"
+          %>
+        <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
+      <% end %>
     </div>
-    <h3 class= "fw-bold my-3" >
-    <span class="bg-warning p-2 rounded">
-    Wash Orders in Process: <%= @wash_orders_in_process %>
-    </span></h3>
-    <div class="cards-production">
-    <% @tools.each do  |tool|%>
+  </div>
+  <h3 class= "fw-bold my-3" >
+    <span class="p-2 rounded" style= "background-color:#ffe591;">
+      Wash Orders in Process: <%= @wash_orders_in_process %>
+    </span>
+  </h3>
+  <div class="cards-production">
+  <% @tools.each do  |tool|%>
         <div class="card shadow p-3 m-1 bg-body-tertiary rounded card-category" style="height: 25rem">
           <div class="card-header">
-          <div class="row justify-content-between">
-            <div class="col-auto"><strong>Alias:</strong> <%= tool.alias %></div>
-            <% if tool.location === "washing" %>
-              <div class="col-auto text-end"><i class="fa-solid fa-hand-sparkles" style="color: #0460c3; font-size: x-large;"></i></div>
-            <% end %>
-          </div>
-            <p></p><strong>SAP:</strong> <%= tool.sap %></p>
+            <div class="row justify-content-between">
+              <div class="col-auto"><strong>Alias:</strong> <%= tool.alias %></div>
+              <% if tool.location === "washing" %>
+              <div class="col-auto text-end" style="font-size: large;"><i class="fa-solid fa-soap" style="color: #E67E22;"></i></div>
+              <% elsif tool.location === "production" %>
+              <div class="col-auto text-end" style="font-size: large;"><i class="fa-sharp fa-solid fa-gears" style="color: #1f6ff9;"></i></i></div>
+              <% end %>
+            </div>
+            <p><strong>SAP:</strong> <%= tool.sap %></p>
           </div>
           <div class="card-body overflow-auto">
-            <div class="list-group list-group-flush">
               <ul class="list-group list-group-flush">
                 <li class="list-group-item">
-                <strong>Blockages:</strong>
-                  <% if tool.blockages.present? %>
-                    <%= tool.blockages.select { |b| b.status === 'open' && b.reason === "wash" }.map { |b| b.cavity.num }.join(", ") %>
-                  <% end %>
+                  <strong>Blocked:</strong>
+                    <% if tool.blockages.present? %>
+                      <%= tool.blockages.select { |b| b.status === 'open' && b.reason === "wash" }.map { |b| b.cavity.num }.join(", ") %>
+                    <% end %>
                 </li>
                 <li class="list-group-item">
-                <strong>Damaged:</strong>
-                  <% if tool.blockages.present? %>
-                    <%= tool.blockages.select { |b| b.status === 'open' && b.reason === "damaged" }.map { |b| b.cavity.num }.join(", ") %>
-                  <% end %>
-                  <% if tool.location === "washing" %>
-                  </li>
-                  <strong>WO Comments:</strong>
-                    <%= tool.wash_orders.find_by(status: "open").comments %>
+                  <strong>Damaged:</strong>
+                    <% if tool.blockages.present? %>
+                      <%= tool.blockages.select { |b| b.status === 'open' && b.reason === "damaged" }.map { |b| b.cavity.num }.join(", ") %>
+                    <% end %>
+                </li>
+                <% if tool.location === "washing" %>
                   <li class="list-group-item">
+                      <strong>WO Comments:</strong>
+                      <%= tool.wash_orders.find_by(status: "open").comments %>
                   </li>
                 <% end %>
               </ul>
-            </div>
           </div>
-          <div class="card-footer">
-          <% if tool.wash_orders.any?{|order| order.status == "open"} %>
-            <%= link_to "update", edit_wash_order_path(tool.wash_orders.find_by(status: "open")), class:"btn btn-warning fw-bold" %>
-          <% else %>
-            <%= link_to "start_wash", new_tool_wash_order_path(tool), class:"btn btn-primary fw-bold" %>
-          <% end %>
+          <div class="card-footer d-flex justify-content-between">
+            <% if tool.wash_orders.any?{|order| order.status == "open"} %>
+              <%= link_to "update", edit_wash_order_path(tool.wash_orders.find_by(status: "open")), class:"btn btn-warning fw-bold" %>
+            <% else %>
+              <%= link_to "start_wash", new_tool_wash_order_path(tool), class:"btn btn-primary fw-bold" %>
+              <div>
+                <%= link_to "Block_Cav", new_tool_blockage_path(tool), class: "btn btn-danger fw-bold ms-auto" %>
+              </div>
+            <% end %>
           </div>
         </div>
       <% end %>
-      </div>
     </div>
+  </div>
 </div>

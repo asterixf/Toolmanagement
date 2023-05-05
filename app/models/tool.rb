@@ -9,7 +9,7 @@ class Tool < ApplicationRecord
       }
   has_many :cavities
   has_many :wash_orders
-  has_many :blockages, through: :cavities
+  has_many :blockages
   has_many :production_orders
   has_many :damage_reports
   validates(

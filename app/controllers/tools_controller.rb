@@ -15,6 +15,11 @@ class ToolsController < ApplicationController
     @low_volume_availability = Tool.where(bu: "Low_Volume").average(:available)&.round(2) || 0
   end
 
+  def blockages_history
+    @tool = Tool.find(params[:tool_id])
+    @tool_blockages = @tool.blockages.order(id: :desc)
+  end
+
   def production
     if params[:query].present?
       @tools = Tool.search_by_params(params[:query]).where(location: "production").or(Tool.where(location: "washing")).order(location: :desc)

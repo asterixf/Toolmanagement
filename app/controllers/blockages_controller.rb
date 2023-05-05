@@ -1,23 +1,35 @@
 class BlockagesController < ApplicationController
+  before_action :set_tool, only: [:new, :create]
+
+  def index
+    if params[:start_date].present? && params[:end_date].present?
+      start_date = Date.parse(params[:start_date])
+      end_date = Date.parse(params[:end_date])
+      start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
+      end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
+    else
+      today = Date.current
+      @start_time = today.beginning_of_day
+      @end_time = today.end_of_day
+    end
+    @blockages = Blockage.where(created_at: start_time..end_time)
+  end
+
+  def show
+    @blockage = Blockage.find(params[:id])
+  end
 
   def new
-    @tool = Tool.find(params[:tool_id])
     @blockage = Blockage.new
   end
 
   def create
-    @tool = Tool.find(params[:tool_id])
     @blockage = Blockage.new(blockage_params)
     @cavity = Cavity.find(params[:blockage][:cavity_id])
     set_blockage_values
     if @blockage.save
-      wash_damaged_present
       update_cavities_in_tool
-      if @blockage.reason == "wash"
-      redirect_to wo_blockages_path
-      elsif @blockage.reason == "damaged"
-        redirect_to d_blockages_path
-      end
+      redirect_to tools_production_path
     else
       render :new, status: :unprocessable_entity
     end
@@ -26,13 +38,17 @@ class BlockagesController < ApplicationController
   private
 
   def blockage_params
-    params.require(:blockage).permit(:reason, :cavity_id)
+    params.require(:blockage).permit(:reason, :cavity_id, :comments)
+  end
+
+  def set_tool
+    @tool = Tool.find(params[:tool_id])
   end
 
   def set_blockage_values
     @blockage.tool = @tool
     @blockage.status = "open"
-    @blockage.created_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
+    @blockage.created_by = "#{current_user.name} #{current_user.lastname}"
   end
 
   def update_cavities_in_tool
@@ -46,15 +62,5 @@ class BlockagesController < ApplicationController
     active = @tool.cavities.where(status: "released", is_spare: false).count
     @tool.update(active: active, blocked: blocked, damaged: damaged)
     @tool.update_available
-  end
-
-  def wash_damaged_present
-    if @tool.wash_orders.where(status: "open").present? && @blockage.reason == "wash"
-      @wash_order = @tool.wash_orders.find_by(status: "open")
-      @wash_order.blockages << @blockage
-    elsif @tool.damage_reports.where(status: "open").present? && @blockage.reason == "damaged"
-      @damage_report = @tool.damage_reports.find_by(status: "open")
-      @damage_report.blockages << @blockage
-    end
   end
 end
