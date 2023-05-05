@@ -43,6 +43,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_042912) do
   end
 
   create_table "blockages", force: :cascade do |t|
+    t.bigint "tool_id", null: false
     t.string "reason"
     t.string "created_by"
     t.string "last_updated_by"
@@ -50,7 +51,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_042912) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "cavity_id", null: false
-    t.bigint "tool_id", null: false
     t.text "comments"
     t.index ["cavity_id"], name: "index_blockages_on_cavity_id"
     t.index ["tool_id"], name: "index_blockages_on_tool_id"
