@@ -8,6 +8,7 @@
         <p><strong>User:</strong> <%= current_user.name %> <%= current_user.lastname %></p>
         <%= f.association :cavity, label_method: :num, collection: @tool.cavities.where(status: "released", is_spare: false), require: true %>
         <%= f.input :reason, collection: ["damaged", "wash"], require: true %>
+        <%= f.input :comments %>
         <%= f.button :submit, "Create", class:"btn btn-primary mb-3" %>
     <% end %>
   </div>

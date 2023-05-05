@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_04_044317) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_05_042912) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -50,7 +50,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_044317) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "cavity_id", null: false
+    t.bigint "tool_id", null: false
+    t.text "comments"
     t.index ["cavity_id"], name: "index_blockages_on_cavity_id"
+    t.index ["tool_id"], name: "index_blockages_on_tool_id"
   end
 
   create_table "cavities", force: :cascade do |t|
@@ -157,6 +160,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_04_044317) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "blockages", "cavities"
+  add_foreign_key "blockages", "tools"
   add_foreign_key "cavities", "tools"
   add_foreign_key "damage_reports", "tools"
   add_foreign_key "production_orders", "tools"

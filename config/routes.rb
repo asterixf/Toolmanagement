@@ -4,8 +4,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update, :new, :create]
   root to: "pages#home"
 
-  # get 'wo_blockages', to: 'pages#wo_blockages'
-  # get 'd_blockages', to: 'pages#d_blockages'
+  get 'tools/blockages', to: 'tools#blockages_history'
   get 'tools/production', to: 'tools#production'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   resources :tools, only: [:index, :new, :create, :show, :edit, :update] do
@@ -14,6 +13,7 @@ Rails.application.routes.draw do
     resources :blockages, only: [:new, :create]
     resources :wash_orders, only: [:new, :create]
     resources :damage_reports, only: [:new, :create]
+    get 'blockages_history', to: 'tools#blockages_history'
   end
 
   resources :production_orders, only: [:edit, :update]
@@ -23,5 +23,7 @@ Rails.application.routes.draw do
   resources :wash_orders, only: [:index, :show, :edit, :update]
 
   resources :damage_reports, only: [:index, :show, :edit, :update]
+
+  resources :blockages, only: [:index, :show]
 
 end

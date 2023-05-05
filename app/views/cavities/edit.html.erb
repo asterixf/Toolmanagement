@@ -3,8 +3,13 @@
     <%= simple_form_for @cavity do |f|  %>
       <h1 class= "fw-bold">Edit Cavity: <%= @cavity.num %></h1>
       <h2>Tool: <%= @cavity.tool.alias %></h2>
+        <% if @cavity.status == "blocked" || @cavity.status == "damaged" %>
+        <p><strong>Num:</strong> <%= @cavity.num %></p>
+        <p class= "bg-danger p-2"><strong>Status:</strong> <%= @cavity.status %></p>
+        <% else %>
         <%= f.input :num , require: true %>
         <%= f.input :status, require: true, collection: ["released", "unavail"] %>
+        <% end %>
         <%= f.input :comments %>
         <%= f.input :is_spare, label: "Is spare" %>
       <p>created by: <%= @cavity.created_by %> <%=  %></p>

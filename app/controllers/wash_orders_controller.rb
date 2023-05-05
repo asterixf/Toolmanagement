@@ -7,16 +7,15 @@ class WashOrdersController < ApplicationController
       end_date = Date.parse(params[:end_date])
       start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
       end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
-      @wash_orders = WashOrder.where(created_at: start_time..end_time)
     else
-      today = Time.current
+      today = Date.current
       start_time = today.beginning_of_day
       end_time = today.end_of_day
-      @wash_orders = WashOrder.where(created_at: start_time..end_time)
     end
+    @wash_orders = WashOrder.where(created_at: start_time..end_time)
     respond_to do |format|
       format.html
-      format.csv { send_data to_csv(WashOrder.all), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
+      format.csv { send_data to_csv(@wash_orders), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
     end
   end
 
@@ -94,7 +93,8 @@ class WashOrdersController < ApplicationController
           when :time_formated
             if order.time.present?
             order.formatted_time
-            elsif ""
+            else
+              ""
             end
           else
             order.send(attr)
