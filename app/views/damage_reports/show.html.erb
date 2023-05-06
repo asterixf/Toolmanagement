@@ -3,10 +3,6 @@
   <div class="registration-form">
       <form action="">
         <h2 class="text-center">Tool: <%= @damage_report.tool.alias %> </h2>
-        <p>
-          Cavities:
-            <%= @damage_report.blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
-        </p>
         <p><strong>Machine_Number:</strong> <%= @damage_report.machine_num %></p>
         <p><strong>Shift:</strong> <%= @damage_report.shift %></p>
         <p><strong>Operator:</strong> <%= @damage_report.operator %></p>
@@ -19,6 +15,9 @@
         <p><strong>Status:</strong> <%= @damage_report.status %></p>
         <p><strong>Created_by:</strong> <%= @damage_report.created_by %></p>
         <p><strong>Closed_by:</strong> <%= @damage_report.closed_by %></p>
+        <% if @damage_report.status == "open" %>
+          <%= link_to "Edit", edit_damage_report_path(@damage_report), class:"btn btn-primary fw-bold"%>
+        <% end %>
     </form>
   </div>
 </div>
