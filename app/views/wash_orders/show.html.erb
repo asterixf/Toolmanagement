@@ -1,1 +1,24 @@
-<h1><%= @wash_order.id %></h1>
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Wash_Order</h1>
+  <div class="registration-form">
+      <form>
+        <h2 class="text-center">Tool: <%= @wash_order.tool.alias %>  -  <%= @wash_order.tool.sap %> </h2>
+          <p><strong>Active_Cav:</strong> <%= @wash_order.active %></p>
+          <p><strong>Blocked_Cav:</strong> <%= @wash_order.blocked %></p>
+          <p><strong>Damaged_Cav:</strong> <%= @wash_order.damaged %></p>
+          <p><strong>startd_at:</strong> <%= @wash_order.created_at.in_time_zone('America/Mexico_City').strftime('%m-%d-%y %H:%M:%S') %></p>
+          <p><strong>Created_by:</strong> <%= @wash_order.created_by %></p>
+          <p><strong>Closed_by:</strong> <%= @wash_order.closed_by %></p>
+          <p><strong>Status:</strong> <%= @wash_order.status %></p>
+          <p><strong>Comments:</strong> <%= @wash_order.comments %></p>
+          <p><strong>Time:</strong>
+            <% if @wash_order.time.present? %>
+              <%= order.formatted_time %>
+            <% end %>
+          </p>
+          <% if @wash_order.status == "open"  %>
+            <%= link_to "update", edit_wash_order_path(@wash_order), class:"btn btn-primary fw-bold" %>
+          <% end %>
+      </form>
+  </div>
+</div>
