@@ -6,9 +6,10 @@
       <%= @blockage.created_at.in_time_zone('America/Mexico_City').strftime('%Y-%m-%d %H:%M:%S %Z') %>
       </p>
       <p><strong>Created_by:</strong> <%= @blockage.created_by %></p>
+      <p><strong>Closed_by:</strong> <%= @blockage.closed_by %></p>
       <p><strong>Status:</strong> <%= @blockage.status %></p>
-      <p><strong>Reason:</strong><%= @blockage.reason %></p>
-      <p><strong>Comments:</strong><%= @blockage.comments %></p>
+      <p><strong>Reason:</strong> <%= @blockage.reason %></p>
+      <p><strong>Comments:</strong> <%= @blockage.comments %></p>
     </form>
   </div>
 </div>

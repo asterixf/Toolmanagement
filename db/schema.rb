@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_05_042912) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_06_031048) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -46,12 +46,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_05_042912) do
     t.bigint "tool_id", null: false
     t.string "reason"
     t.string "created_by"
-    t.string "last_updated_by"
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "cavity_id", null: false
     t.text "comments"
+    t.string "closed_by"
     t.index ["cavity_id"], name: "index_blockages_on_cavity_id"
     t.index ["tool_id"], name: "index_blockages_on_tool_id"
   end
