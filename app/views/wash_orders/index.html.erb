@@ -35,7 +35,7 @@
           <th>Alias</th>
           <th>Closed_by</th>
           <th>Wash_Time</th>
-          <th>Comments</th>
+          <th></th>
           </tr>
         </thead>
         <tbody>
@@ -63,7 +63,9 @@
               <%= order.formatted_time %>
               <% end %>
             </td>
-            <td><%= order.comments %></td>
+            <td>  <%= link_to wash_order_path(order) do %>
+                  <i class="fa-solid fa-eye"></i>
+                <% end %></td>
           </tr>
         <% end %>
         </tbody>
