@@ -1,0 +1,15 @@
+<div class="container my-3">
+  <h1 class="text-center fw-bold">Edit Blockage</h1>
+  <div class="registration-form">
+    <%= simple_form_for @blockage do |f| %>
+        <h2><strong>Tool Alias:</strong> <%= @blockage.tool.alias %></h2>
+        <p><strong>Tool SAP:</strong> <%= @blockage.tool.sap %></p>
+        <p><strong>Tool BU:</strong> <%= @blockage.tool.bu %></p>
+        <p><strong>Created_by:</strong> <%= @blockage.created_by %></p>
+        <p><strong>Reason:</strong> <%= @blockage.reason %></p>
+        <%= f.input :status, require:true, collection: ["open", "close"] %>
+        <%= f.input :comments %>
+        <%= f.button :submit, "Update", class:"btn btn-primary mb-3" %>
+    <% end %>
+  </div>
+</div>

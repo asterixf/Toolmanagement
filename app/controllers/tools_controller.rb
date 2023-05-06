@@ -16,7 +16,7 @@ class ToolsController < ApplicationController
   end
 
   def blockages_history
-    @tool = Tool.find(params[:tool_id])
+    @tool = Tool.find(params[:id])
     @tool_blockages = @tool.blockages.order(id: :desc)
   end
 

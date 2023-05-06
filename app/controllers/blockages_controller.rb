@@ -15,8 +15,37 @@ class BlockagesController < ApplicationController
     @blockages = Blockage.where(created_at: start_time..end_time)
   end
 
+  def active
+    if params[:query].present?
+      @active_blockages = Blockage.global_search(params[:query]).where(status: "open")
+    else
+      @active_blockages = Blockage.where(status: "open")
+    end
+  end
+
   def show
     @blockage = Blockage.find(params[:id])
+  end
+
+  def edit
+    @blockage = Blockage.find(params[:id])
+  end
+
+  def update
+    @blockage = Blockage.find(params[:id])
+    if @blockage.update(blockage_params)
+      if @blockage.status == "close"
+        @blockage.cavity.update(status: "released")
+        @blockage.update(
+          closed_by: "#{current_user.name} #{current_user.lastname}",
+        )
+        update_cavities_in_tool
+      end
+      redirect_to tool_path(@blockage.tool)
+      flash[:notice] = "Blockage updated succesfully!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def new
@@ -28,6 +57,7 @@ class BlockagesController < ApplicationController
     @cavity = Cavity.find(params[:blockage][:cavity_id])
     set_blockage_values
     if @blockage.save
+      update_cavity_status
       update_cavities_in_tool
       redirect_to tools_production_path
     else
@@ -38,7 +68,7 @@ class BlockagesController < ApplicationController
   private
 
   def blockage_params
-    params.require(:blockage).permit(:reason, :cavity_id, :comments)
+    params.require(:blockage).permit(:reason, :cavity_id, :comments, :status)
   end
 
   def set_tool
@@ -51,16 +81,19 @@ class BlockagesController < ApplicationController
     @blockage.created_by = "#{current_user.name} #{current_user.lastname}"
   end
 
-  def update_cavities_in_tool
+  def update_cavity_status
     if @blockage.reason == "wash"
       @cavity.update(status: "blocked")
     elsif @blockage.reason == "damaged"
       @cavity.update(status: "damaged")
     end
-    blocked = @tool.cavities.where(status: "blocked").count
-    damaged = @tool.cavities.where(status: "damaged").count
-    active = @tool.cavities.where(status: "released", is_spare: false).count
-    @tool.update(active: active, blocked: blocked, damaged: damaged)
-    @tool.update_available
+  end
+
+  def update_cavities_in_tool
+    blocked = @blockage.tool.cavities.where(status: "blocked").count
+    damaged = @blockage.tool.cavities.where(status: "damaged").count
+    active = @blockage.tool.cavities.where(status: "released", is_spare: false).count
+    @blockage.tool.update(active: active, blocked: blocked, damaged: damaged)
+    @blockage.tool.update_available
   end
 end

@@ -176,14 +176,20 @@
         </tr>
         <tr>
           <td style="font-size: 12px;">
-            Created by: <%= @tool.created_by %>
+            Created by:
           </td>
+          <td><%= @tool.created_by %></td>
+        </tr>
+        <tr>
           <td style="font-size: 12px;">
-            Updated by: <%= @tool.last_updated_by %>
+            Updated by:
           </td>
+          <td><%= @tool.last_updated_by %></td>
         </tr>
       </table>
-      <%= link_to "Edit", edit_tool_path(@tool), class: "btn btn-primary" %>
+      <%= link_to "Edit_Tool", edit_tool_path(@tool), class: "btn btn-primary" %>
+      <%= link_to "Blockages_History", tool_blockages_history_path(@tool), class: "btn btn-secondary" %>
+      <%= link_to "Block_Cav", new_tool_blockage_path(@tool), class: "btn btn-danger fw-bold" %>
   </div>
   <div class="mx-auto border border-secondary-subtle shadow p-5 mb-5 bg-light rounded-4">
     <h1 class="text-center fw-bold">Cavities</h1>
@@ -213,7 +219,15 @@
           <% @cavities.each do |cavity| %>
             <tr>
               <td><%= link_to cavity.num, edit_cavity_path(cavity) %></td>
-              <td><%= cavity.status %></td>
+              <td>
+              <% if cavity.status == "blocked" || cavity.status == "damaged" %>
+                <%= link_to edit_blockage_path(cavity.blockages.find_by(status: "open")) do %>
+                  <%= cavity.status %>
+                <% end %>
+              <% else %>
+                <%= cavity.status %>
+              <% end %>
+              </td>
               <td><%= cavity.is_spare ? 'Yes' : 'No' %></td>
               <td><%= cavity.created_by %></td>
               <td><%= cavity.last_updated_by %></td>

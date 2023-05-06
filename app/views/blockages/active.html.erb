@@ -1,0 +1,34 @@
+<div class="mt-2 mx-4">
+  <div class="row justify-content-end">
+    <div class="col-lg-4 col-md-6 my-2">
+      <%= form_with url: blockages_active_path, method: :get, class: "d-flex" do %>
+        <%= text_field_tag :query,
+              params[:query],
+              class: "form-control",
+              placeholder: "Type a keyword"
+          %>
+        <%= submit_tag "Search", name: "", class: "btn btn-primary" %>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <% @active_blockages.each do |blockage| %>
+      <div class="col-sm-4 mb-3 mb-sm-0">
+        <div class="card my-1 overflow-auto" style= "max-height: 15rem;">
+          <div class="card-body">
+            <p><strong>T_SAP:</strong> <%= blockage.tool.sap %> <strong>T_Alias:</strong> <%= blockage.tool.alias %></p>
+              <p><strong>Reason:</strong> <%= blockage.reason %> <strong>Cavity:</strong> <%= blockage.cavity.num %></p>
+              <div class="text-end">
+              <%= link_to edit_blockage_path(blockage), class: "btn btn-primary"  do %>
+                <i class="fa-solid fa-pen-to-square" style= "font-size: large;"></i>
+              <% end %>
+              <%= link_to blockage_path(blockage), class: "btn btn-primary" do%>
+                <i class="fa-solid fa-eye"></i>
+              <% end %>
+              </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
