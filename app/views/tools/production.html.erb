@@ -57,10 +57,11 @@
               <%= link_to "update", edit_wash_order_path(tool.wash_orders.find_by(status: "open")), class:"btn btn-warning fw-bold" %>
             <% else %>
               <%= link_to "start_wash", new_tool_wash_order_path(tool), class:"btn btn-primary fw-bold" %>
-              <div>
-                <%= link_to "Block_Cav", new_tool_blockage_path(tool), class: "btn btn-danger fw-bold ms-auto" %>
-              </div>
             <% end %>
+            <div>
+              <%= link_to "Block_Cav", new_tool_blockage_path(tool), class: "btn btn-danger fw-bold ms-auto" %>
+              <%= link_to "Report_DMG", new_tool_damage_report_path(tool), class: "btn btn-info fw-bold ms-auto" %>
+            </div>
           </div>
         </div>
       <% end %>

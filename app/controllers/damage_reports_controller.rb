@@ -27,7 +27,7 @@ class DamageReportsController < ApplicationController
     @damage_report = DamageReport.new(damagereport_paramas)
     set_damage_report_values
     if @damage_report.save
-      redirect_to d_blockages_path
+      redirect_to damage_reports_path
     else
       render :new, status: :unprocessable_entity
     end

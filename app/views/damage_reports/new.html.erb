@@ -3,10 +3,6 @@
   <div class="registration-form">
     <%= simple_form_for [@tool, @damage_report] do |f| %>
         <h2 class="text-center">Tool: <%= @tool.alias %> </h2>
-        <p>
-          Cavities:
-            <%= @blockages.map { |blockage| blockage.cavity.num }.join(', ') %>
-        </p>
         <%= f.input :machine_num, label:"Machine_Number", require: true %>
         <%= f.input :shift, require: true %>
         <%= f.input :operator, require: true %>
