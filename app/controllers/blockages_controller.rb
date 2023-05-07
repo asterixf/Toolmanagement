@@ -2,6 +2,7 @@ class BlockagesController < ApplicationController
   before_action :set_tool, only: [:new, :create]
 
   def index
+    @blockages = policy_scope(Blockage)
     if params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -17,22 +18,26 @@ class BlockagesController < ApplicationController
 
   def active
     if params[:query].present?
-      @active_blockages = Blockage.global_search(params[:query]).where(status: "open")
+      @blockages = Blockage.global_search(params[:query]).where(status: "open")
     else
-      @active_blockages = Blockage.where(status: "open")
+      @blockages = Blockage.where(status: "open")
     end
+    authorize @blockages
   end
 
   def show
     @blockage = Blockage.find(params[:id])
+    authorize @blockage
   end
 
   def edit
     @blockage = Blockage.find(params[:id])
+    authorize @blockage
   end
 
   def update
     @blockage = Blockage.find(params[:id])
+    authorize @blockage
     if @blockage.update(blockage_params)
       if @blockage.status == "close"
         @blockage.cavity.update(status: "released")
@@ -50,10 +55,12 @@ class BlockagesController < ApplicationController
 
   def new
     @blockage = Blockage.new
+    authorize @blockage
   end
 
   def create
     @blockage = Blockage.new(blockage_params)
+    authorize @blockage
     @cavity = Cavity.find(params[:blockage][:cavity_id])
     set_blockage_values
     if @blockage.save

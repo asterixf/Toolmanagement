@@ -62,6 +62,9 @@ end
 #used for attachment hosting
 gem "cloudinary"
 
+# Gemfile
+gem "pundit"
+
 gem "mime-types"
 
 gem "pg_search"

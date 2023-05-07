@@ -1,11 +1,8 @@
 class DamageReportsController < ApplicationController
   before_action :set_tool, only: [:new, :create]
 
-  def show
-    @damage_report = DamageReport.find(params[:id])
-  end
-
   def index
+    @damage_reports = policy_scope(DamageReport)
     if params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -19,12 +16,19 @@ class DamageReportsController < ApplicationController
     @damage_reports = DamageReport.where(created_at: start_time..end_time)
   end
 
+  def show
+    @damage_report = DamageReport.find(params[:id])
+    authorize @damage_report
+  end
+
   def new
     @damage_report = DamageReport.new
+    authorize @damage_report
   end
 
   def create
     @damage_report = DamageReport.new(damagereport_paramas)
+    authorize @damage_report
     set_damage_report_values
     if @damage_report.save
       redirect_to damage_reports_path
@@ -35,10 +39,12 @@ class DamageReportsController < ApplicationController
 
   def edit
     @damage_report = DamageReport.find(params[:id])
+    authorize @damage_report
   end
 
   def update
     @damage_report = DamageReport.find(params[:id])
+    authorize @damage_report
     if @damage_report.update(damagereport_paramas)
       if @damage_report.status === "close"
         @damage_report.update(

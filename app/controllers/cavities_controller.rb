@@ -1,19 +1,22 @@
 class CavitiesController < ApplicationController
   before_action :set_tool, only: [:new, :create]
-  def index
-    @cavities = Cavity.all
-  end
+  # def index
+  #   @cavities = Cavity.all
+  # end
 
   def show
     @cavity = Cavity.find(params[:id])
+    authorize @cavity
   end
 
   def new
     @cavity = Cavity.new
+    authorize @cavity
   end
 
   def create
     @cavity = Cavity.new(cavity_params)
+    authorize @cavity
     @cavity.tool = @tool
     @cavity.created_by = "#{current_user.id}-#{current_user.name} #{current_user.lastname}"
     if @cavity.save
@@ -29,10 +32,12 @@ class CavitiesController < ApplicationController
 
   def edit
     @cavity = Cavity.find(params[:id])
+    authorize @cavity
   end
 
   def update
     @cavity = Cavity.find(params[:id])
+    authorize @cavity
     @tool = @cavity.tool
     @cavity.last_updated_by = "#{current_user.name} #{current_user.lastname}"
     if @cavity.update(cavity_params)

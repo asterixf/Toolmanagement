@@ -2,6 +2,7 @@ class WashOrdersController < ApplicationController
   before_action :set_tool, only: [:new, :create]
 
   def index
+    @wash_orders = policy_scope(WashOrder)
     if params[:start_date].present? && params[:end_date].present?
       start_date = Date.parse(params[:start_date])
       end_date = Date.parse(params[:end_date])
@@ -15,20 +16,23 @@ class WashOrdersController < ApplicationController
     @wash_orders = WashOrder.where(created_at: start_time..end_time)
     respond_to do |format|
       format.html
-      format.csv { send_data to_csv(@wash_orders), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
+      format.csv { send_data to_csv(WashOrder.all), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
     end
   end
 
   def show
     @wash_order = WashOrder.find(params[:id])
+    authorize @wash_order
   end
 
   def new
     @wash_order = WashOrder.new
+    authorize @wash_order
   end
 
   def create
     @wash_order = WashOrder.new(washorder_paramas)
+    authorize @wash_order
     set_wash_order_values
     if @wash_order.save
       @tool.update(location:"washing")
@@ -40,10 +44,12 @@ class WashOrdersController < ApplicationController
 
   def edit
     @wash_order = WashOrder.find(params[:id])
+    authorize @wash_order
   end
 
   def update
     @wash_order = WashOrder.find(params[:id])
+    authorize @wash_order
     if @wash_order.update(washorder_paramas)
       if @wash_order.status === "close"
         @wash_order.tool.update(location:"production")
