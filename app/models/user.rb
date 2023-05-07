@@ -2,8 +2,7 @@ class User < ApplicationRecord
   validate :password_complexity
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable
 
   # :registerable registable removedto hide sign up option
 
