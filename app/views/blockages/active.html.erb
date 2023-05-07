@@ -12,15 +12,17 @@
     </div>
   </div>
   <div class="row">
-    <% @active_blockages.each do |blockage| %>
+    <% @blockages.each do |blockage| %>
       <div class="col-sm-4 mb-3 mb-sm-0">
         <div class="card my-1 overflow-auto" style= "max-height: 15rem;">
           <div class="card-body">
             <p><strong>T_SAP:</strong> <%= blockage.tool.sap %> <strong>T_Alias:</strong> <%= blockage.tool.alias %></p>
               <p><strong>Reason:</strong> <%= blockage.reason %> <strong>Cavity:</strong> <%= blockage.cavity.num %></p>
               <div class="text-end">
-              <%= link_to edit_blockage_path(blockage), class: "btn btn-primary"  do %>
-                <i class="fa-solid fa-pen-to-square" style= "font-size: large;"></i>
+              <% if policy(blockage).edit? %>
+                <%= link_to edit_blockage_path(blockage), class: "btn btn-primary"  do %>
+                  <i class="fa-solid fa-pen-to-square" style= "font-size: large;"></i>
+                <% end %>
               <% end %>
               <%= link_to blockage_path(blockage), class: "btn btn-primary" do%>
                 <i class="fa-solid fa-eye"></i>

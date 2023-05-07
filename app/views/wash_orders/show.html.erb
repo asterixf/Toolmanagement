@@ -13,10 +13,10 @@
           <p><strong>Comments:</strong> <%= @wash_order.comments %></p>
           <p><strong>Time:</strong>
             <% if @wash_order.time.present? %>
-              <%= order.formatted_time %>
+              <%= @wash_order.formatted_time %>
             <% end %>
           </p>
-          <% if @wash_order.status == "open"  %>
+          <% if policy(@wash_order).edit? && @wash_order.status == "open"  %>
             <%= link_to "update", edit_wash_order_path(@wash_order), class:"btn btn-primary fw-bold" %>
           <% end %>
       </form>

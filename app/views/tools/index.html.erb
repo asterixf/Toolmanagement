@@ -105,22 +105,34 @@
           <td><%= tool.volume %></td>
           <td><%= tool.customer %></td>
           <% if tool.location === "production" %>
-            <td><%= link_to "produc", edit_production_order_path(tool.production_orders.find_by(status:"open")), class: "btn btn-primary"%></td>
+            <% if policy(ProductionOrder).edit? %>
+              <td><%= link_to "produc", edit_production_order_path(tool.production_orders.find_by(status:"open")), class: "btn btn-primary"%></td>
+            <% else %>
+              <td><span class= "bg-primary p-2 fw-medium" style="color: white;" >produc</span></td>
+            <% end %>
           <% elsif tool.location === "washing" %>
             <td><span class= "bg-warning p-2">washing</span></td>
           <% elsif tool.location === "stored" %>
-            <td><%= link_to tool.location, new_tool_production_order_path(tool), class: "btn btn-success"%></td>
+            <% if policy(ProductionOrder).create? %>
+              <td><%= link_to tool.location, new_tool_production_order_path(tool), class: "btn btn-success"%></td>
+            <% else %>
+              <td><span class= "bg-success p-2 fw-medium" >stored</span></td>
+            <% end %>
           <% end %>
           <td>
           <%= tool.damaged %>
-          <%= link_to new_tool_blockage_path(tool) do %>
-          <i class="fa-solid fa-square-plus"></i>
+          <% if policy(Blockage).create? %>
+            <%= link_to new_tool_blockage_path(tool) do %>
+            <i class="fa-solid fa-square-plus"></i>
+            <% end %>
           <% end %>
           </td>
           <td>
           <%= tool.blocked %>
-          <%= link_to new_tool_blockage_path(tool) do %>
-          <i class="fa-solid fa-square-plus"></i>
+          <% if policy(Blockage).create? %>
+            <%= link_to new_tool_blockage_path(tool) do %>
+            <i class="fa-solid fa-square-plus"></i>
+            <% end %>
           <% end %>
           </td>
           <td><%= tool.active %></td>

@@ -187,22 +187,30 @@
           <td><%= @tool.last_updated_by %></td>
         </tr>
       </table>
-      <%= link_to "Edit_Tool", edit_tool_path(@tool), class: "btn btn-primary" %>
+      <% if policy(@tool).edit? %>
+        <%= link_to "Edit_Tool", edit_tool_path(@tool), class: "btn btn-primary" %>
+      <% end %>
       <%= link_to "Blockages_History", tool_blockages_history_path(@tool), class: "btn btn-secondary" %>
-      <%= link_to "Block_Cav", new_tool_blockage_path(@tool), class: "btn btn-danger" %>
-      <%= link_to "Report_DMG", new_tool_damage_report_path(@tool), class: "btn btn-info" %>
+      <% if policy(Blockage).create? %>
+        <%= link_to "Block_Cav", new_tool_blockage_path(@tool), class: "btn btn-danger" %>
+      <% end %>
+      <% if policy(DamageReport).create? %>
+       <%= link_to "Report_DMG", new_tool_damage_report_path(@tool), class: "btn btn-info" %>
+      <% end %>
   </div>
   <div class="mx-auto border border-secondary-subtle shadow p-5 mb-5 bg-light rounded-4">
     <h1 class="text-center fw-bold">Cavities</h1>
-      <div class="col-6 mx-auto">
-        <%= simple_form_for [@tool,@cavity] do |f| %>
-          <%= f.input :num , require: true %>
-          <%= f.input :status, require: true, collection: ["released", "unavail"] %>
-          <%= f.input :comments %>
-          <%= f.input :is_spare, label: "Is spare" %>
-          <%= f.button :submit, "Add_Cavity", class:"btn btn-primary mb-3" %>
-        <% end %>
-      </div>
+      <% if policy(@cavity).new? %>
+        <div class="col-6 mx-auto">
+          <%= simple_form_for [@tool,@cavity] do |f| %>
+            <%= f.input :num , require: true %>
+            <%= f.input :status, require: true, collection: ["released", "unavail"] %>
+            <%= f.input :comments %>
+            <%= f.input :is_spare, label: "Is spare" %>
+            <%= f.button :submit, "Add_Cavity", class:"btn btn-primary mb-3" %>
+          <% end %>
+        </div>
+      <% end %>
     <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary text-center">
       <thead>
         <tr>
@@ -219,9 +227,9 @@
         <% if @cavities %>
           <% @cavities.each do |cavity| %>
             <tr>
-              <td><%= link_to cavity.num, edit_cavity_path(cavity) %></td>
+              <td><%= link_to cavity.num, cavity_path(cavity) %></td>
               <td>
-              <% if cavity.status == "blocked" || cavity.status == "damaged" %>
+              <% if policy(Blockage).edit? && (cavity.status == "blocked" || cavity.status == "damaged")  %>
                 <%= link_to edit_blockage_path(cavity.blockages.find_by(status: "open")) do %>
                   <%= cavity.status %>
                 <% end %>

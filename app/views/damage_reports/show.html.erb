@@ -15,7 +15,7 @@
         <p><strong>Status:</strong> <%= @damage_report.status %></p>
         <p><strong>Created_by:</strong> <%= @damage_report.created_by %></p>
         <p><strong>Closed_by:</strong> <%= @damage_report.closed_by %></p>
-        <% if @damage_report.status == "open" %>
+        <% if policy(@damage_report).edit? && @damage_report.status == "open" %>
           <%= link_to "Edit", edit_damage_report_path(@damage_report), class:"btn btn-primary fw-bold"%>
         <% end %>
     </form>

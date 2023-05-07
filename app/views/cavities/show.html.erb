@@ -1,7 +1,7 @@
 <div class="container my-3">
   <div class="registration-form">
     <form>
-      <h1 class= "fw-bold">Edit Cavity: <%= @cavity.num %></h1>
+      <h1 class= "fw-bold">Cavity: <%= @cavity.num %></h1>
       <h2>Tool: <%= @cavity.tool.alias %></h2>
       <p><strong>Created:</strong>
       <%= @cavity.created_at.in_time_zone('America/Mexico_City').strftime('%Y-%m-%d %H:%M:%S %Z') %>
@@ -11,6 +11,9 @@
       <p><strong>Spare:</strong> <%= @cavity.is_spare ? "Yes" : "No" %></p>
       <p><strong>Status:</strong> <%= @cavity.status %></p>
       <p><strong>Comments:</strong><%= @cavity.comments %></p>
+      <% if policy(@cavity).edit? %>
+        <%= link_to "Edit", edit_cavity_path(@cavity), class: "btn btn-primary" %>
+      <% end %>
     </form>
   </div>
 </div>

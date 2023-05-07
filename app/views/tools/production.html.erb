@@ -23,7 +23,7 @@
             <div class="row justify-content-between">
               <div class="col-auto"><strong>Alias:</strong> <%= tool.alias %></div>
               <% if tool.location === "washing" %>
-              <div class="col-auto text-end" style="font-size: large;"><i class="fa-solid fa-soap" style="color: #E67E22;"></i></div>
+              <div class="col-auto text-end bg-info fw-bold" style="font-size: small;">washing <i class="fa-solid fa-soap"></i></div>
               <% elsif tool.location === "production" %>
               <div class="col-auto text-end" style="font-size: large;"><i class="fa-sharp fa-solid fa-gears" style="color: #1f6ff9;"></i></i></div>
               <% end %>
@@ -52,16 +52,20 @@
                 <% end %>
               </ul>
           </div>
-          <div class="card-footer d-flex justify-content-between">
-            <% if tool.wash_orders.any?{|order| order.status == "open"} %>
-              <%= link_to "update", edit_wash_order_path(tool.wash_orders.find_by(status: "open")), class:"btn btn-warning fw-bold" %>
-            <% else %>
-              <%= link_to "start_wash", new_tool_wash_order_path(tool), class:"btn btn-primary fw-bold" %>
+          <div class="card-footer">
+            <% if policy(WashOrder).create? %>
+              <% if tool.wash_orders.any?{|order| order.status == "open"} %>
+                <%= link_to "update", edit_wash_order_path(tool.wash_orders.find_by(status: "open")), class:"btn btn-sm btn-warning fw-bold" %>
+              <% else %>
+                <%= link_to "start_wash", new_tool_wash_order_path(tool), class:"btn btn-sm btn-primary fw-bold" %>
+              <% end %>
             <% end %>
-            <div>
-              <%= link_to "Block_Cav", new_tool_blockage_path(tool), class: "btn btn-danger fw-bold ms-auto" %>
-              <%= link_to "Report_DMG", new_tool_damage_report_path(tool), class: "btn btn-info fw-bold ms-auto" %>
-            </div>
+            <% if policy(Blockage).create? %>
+              <%= link_to "Block_Cav", new_tool_blockage_path(tool), class: "btn btn-sm btn-danger fw-bold ms-auto" %>
+            <% end %>
+            <% if policy(DamageReport).create? %>
+              <%= link_to "Report_DMG", new_tool_damage_report_path(tool), class: "btn btn-sm btn-info fw-bold ms-auto" %>
+            <% end %>
           </div>
         </div>
       <% end %>

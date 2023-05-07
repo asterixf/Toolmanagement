@@ -1,5 +1,6 @@
 class ToolsController < ApplicationController
   def index
+    @tools = policy_scope(Tool)
     if params[:query].present?
       @tools = Tool.search_by_params(params[:query]).order(location: :asc)
     else
@@ -7,7 +8,7 @@ class ToolsController < ApplicationController
     end
     respond_to do |format|
       format.html
-      format.csv { send_data to_csv(@tools), filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
+      format.csv { send_data to_csv(Tool.all), filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
     end
     @average_availability = Tool.all.average(:available)&.round(2) || 0
     @damper_availability = Tool.where(bu: "Damper").average(:available)&.round(2) || 0
@@ -17,6 +18,7 @@ class ToolsController < ApplicationController
 
   def blockages_history
     @tool = Tool.find(params[:id])
+    authorize @tool
     @tool_blockages = @tool.blockages.order(id: :desc)
   end
 
@@ -26,21 +28,25 @@ class ToolsController < ApplicationController
     else
       @tools = Tool.where(location: "production").or(Tool.where(location: "washing")).order(location: :desc)
     end
+    authorize @tools
     @wash_orders_in_process = WashOrder.where(status: "open").count
   end
 
   def show
     @tool = Tool.find(params[:id])
+    authorize @tool
     @cavity = Cavity.new
     @cavities = @tool.cavities.order(status: :asc)
   end
 
   def new
     @tool = Tool.new
+    authorize @tool
   end
 
   def create
     @tool = Tool.new(tool_params)
+    authorize @tool
     set_tool_values
     if @tool.save
       redirect_to tool_path(@tool)
@@ -52,10 +58,12 @@ class ToolsController < ApplicationController
 
   def edit
     @tool = Tool.find(params[:id])
+    authorize @tool
   end
 
   def update
     @tool = Tool.find(params[:id])
+    authorize @tool
     if @tool.update(tool_params)
       redirect_to tool_path(@tool)
     else
