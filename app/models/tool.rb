@@ -27,7 +27,6 @@ class Tool < ApplicationRecord
     :spares,
     presence: true
   )
-  validates :sap, uniqueness: true
   has_one_attached :layout
   validate :layout_mime_type
 
