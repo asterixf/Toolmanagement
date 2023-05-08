@@ -25,7 +25,7 @@ class CavitiesController < ApplicationController
       redirect_to tool_path(@tool)
       flash[:notice] = "Cavity created succesfully!"
     else
-      flash[:alert] = "Error: num and satatus can't be blank / cavity num should be unique in tool  "
+      flash[:alert] = "Error: num and satatus can't be blank "
       redirect_to tool_path(@tool)
     end
   end
