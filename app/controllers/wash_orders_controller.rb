@@ -87,25 +87,31 @@ class WashOrdersController < ApplicationController
 
   def to_csv(wash_orders)
     attribs = [:id, :created_at, :closed_at, :created_by, :time_formated, :tool_sap, :tool_alias]
-    CSV.generate(headers: true) do |csv|
-      csv << attribs
-      wash_orders.each do |order|
-        csv << attribs.map do |attr|
-          case attr
-          when :tool_sap
-            order.tool.sap
-          when :tool_alias
-            order.tool.alias
-          when :time_formated
-            if order.time.present?
-            order.formatted_time
+    if wash_orders && wash_orders.any?
+      CSV.generate(headers: true) do |csv|
+        csv << attribs
+        wash_orders.each do |order|
+          csv << attribs.map do |attr|
+            case attr
+            when :tool_sap
+              order.tool.sap
+            when :tool_alias
+              order.tool.alias
+            when :time_formated
+              if order.time.present?
+                order.formatted_time
+              else
+                ""
+              end
             else
-              ""
+              order.send(attr)
             end
-          else
-            order.send(attr)
           end
         end
+      end
+    else
+      CSV.generate(headers: true) do |csv|
+        csv << attribs
       end
     end
   end
