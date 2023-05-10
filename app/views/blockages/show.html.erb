@@ -10,6 +10,9 @@
       <p><strong>Status:</strong> <%= @blockage.status %></p>
       <p><strong>Reason:</strong> <%= @blockage.reason %></p>
       <p><strong>Comments:</strong> <%= @blockage.comments %></p>
+      <% if policy(@blockage).edit? && @blockage.status == "open"%>
+        <%= link_to "Edit",  edit_blockage_path(@blockage), class: "btn btn-primary"%>
+      <% end %>
     </form>
   </div>
 </div>
