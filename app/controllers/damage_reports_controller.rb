@@ -46,7 +46,7 @@ class DamageReportsController < ApplicationController
     @damage_report = DamageReport.find(params[:id])
     authorize @damage_report
     if @damage_report.update(damagereport_paramas)
-      if @damage_report.status === "close"
+      if @damage_report.status == "close"
         @damage_report.update(
           closed_by: "#{current_user.name} #{current_user.lastname}"
         )
