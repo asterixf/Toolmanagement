@@ -93,6 +93,14 @@ class WashOrdersController < ApplicationController
         wash_orders.each do |order|
           csv << attribs.map do |attr|
             case attr
+            when :created_at
+              order.created_at.in_time_zone('America/Mexico_City').strftime("%Y-%m-%d %H:%M:%S")
+            when :closed_at
+              if order.closed_at.present?
+                order.closed_at.in_time_zone('America/Mexico_City').strftime("%Y-%m-%d %H:%M:%S")
+              else
+                ""
+              end
             when :tool_sap
               order.tool.sap
             when :tool_alias
