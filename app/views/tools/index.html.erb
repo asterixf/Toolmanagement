@@ -1,40 +1,40 @@
 <div class="mt-2 mx-4">
   <div>
     <div class="cards my-5">
-      <% if @damper_availability <= 70 %>
+      <% if @hv_availability <= 70 %>
         <div class="card-category row text-center mx-1 bg-danger">
-      <% elsif @damper_availability < 90 %>
+      <% elsif @hv_availability < 90 %>
         <div class="card-category row text-center mx-1 bg-warning">
       <% else %>
         <div class="card-category row text-center mx-1 bg-success">
       <% end %>
           <div class="col align-self-center">
-            <h1 class="fw-bold"><%= @damper_availability.round(2) %>%</h1>
-            <p class="fw-bold">Damper Availability</p>
+            <h1 class="fw-bold"><%= @hv_availability.round(2) %>%</h1>
+            <p class="fw-bold">HV Availability</p>
           </div>
         </div>
-      <% if @steering_availability <= 70 %>
+      <% if @mv_availability <= 70 %>
         <div class="card-category row text-center mx-1 bg-danger">
-      <% elsif @steering_availability < 90 %>
+      <% elsif @mv_availability < 90 %>
         <div class="card-category row text-center mx-1 bg-warning">
       <% else %>
         <div class="card-category row text-center mx-1 bg-success">
       <% end %>
           <div class="col align-self-center">
-            <h1 class="fw-bold"><%= @steering_availability.round(2) %>%</h1>
-            <p class="fw-bold">Steering Availability</p>
+            <h1 class="fw-bold"><%= @mv_availability.round(2) %>%</h1>
+            <p class="fw-bold">MV Availability</p>
           </div>
         </div>
-      <% if @low_volume_availability <= 70 %>
+      <% if @lv_availability <= 70 %>
         <div class="card-category row text-center mx-1 bg-danger">
-      <% elsif @low_volume_availability < 90 %>
+      <% elsif @lv_availability < 90 %>
         <div class="card-category row text-center mx-1 bg-warning">
       <% else %>
         <div class="card-category row text-center mx-1 bg-success">
       <% end %>
           <div class="col align-self-center">
-            <h1 class="fw-bold"><%= @low_volume_availability.round(2) %>%</h1>
-            <p class="fw-bold">Low_Volume Availability</p>
+            <h1 class="fw-bold"><%= @lv_availability.round(2) %>%</h1>
+            <p class="fw-bold">LV Availability</p>
           </div>
         </div>
     </div>
