@@ -9,7 +9,7 @@ class WashOrdersController < ApplicationController
       start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
       end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
     else
-      today = Date.current
+      today = (Time.now - 6.hours).to_date
       start_time = today.beginning_of_day
       end_time = today.end_of_day
     end
