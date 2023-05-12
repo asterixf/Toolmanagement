@@ -25,4 +25,8 @@ class CavityPolicy < ApplicationPolicy
   def update?
     user.admin? || user.department == "Tooling"
   end
+
+  def destroy?
+    user.admin?
+  end
 end

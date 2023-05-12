@@ -48,6 +48,18 @@ class CavitiesController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
+
+  def destroy
+    @cavity = Cavity.find(params[:id])
+    @tool = @cavity.tool
+    authorize @cavity
+    @cavity.destroy
+    update_blocked_damaged
+    update_active_spares
+    flash[:alert] = "Cavity deleted succesfully!"
+    redirect_to tool_path(@tool)
+  end
+
   private
 
   def cavity_params
@@ -63,5 +75,11 @@ class CavitiesController < ApplicationController
     spares = @tool.cavities.where(is_spare: true).count
     @tool.update(active: active, spares: spares)
     @tool.update_available
+  end
+
+  def update_blocked_damaged
+    blocked = @tool.cavities.where(status: "blocked").count
+    damaged = @tool.cavities.where(status: "damaged").count
+    @tool.update(blocked: blocked, damaged: damaged)
   end
 end

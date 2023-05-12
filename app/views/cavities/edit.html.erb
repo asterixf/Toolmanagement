@@ -15,6 +15,11 @@
       <p>created by: <%= @cavity.created_by %> <%=  %></p>
       <p>Last_edited_by: <%= @cavity.last_updated_by %></p>
       <%= f.button :submit, "save", class: "btn btn-primary" %>
+      <% if policy(@cavity).destroy? %>
+        <%= link_to "Delete", cavity_path(@cavity), class:"btn btn-danger ms-5 fw-semibold",
+        data: {turbo_method: :delete,
+        turbo_confirm: "Delete cavity? (this action cannot be reversed)"}%>
+      <% end %>
     <% end %>
   </div>
 </div>

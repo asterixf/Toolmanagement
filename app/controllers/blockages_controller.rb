@@ -67,6 +67,7 @@ class BlockagesController < ApplicationController
       update_cavity_status
       update_cavities_in_tool
       redirect_to tools_production_path
+      flash[:notice] = "Blockage created succesfully!"
     else
       render :new, status: :unprocessable_entity
     end
