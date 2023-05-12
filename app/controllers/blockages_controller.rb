@@ -10,8 +10,8 @@ class BlockagesController < ApplicationController
       end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
     else
       today = Date.today
-      @start_time = today.beginning_of_day
-      @end_time = today.end_of_day
+      start_time = today.beginning_of_day
+      end_time = today.end_of_day
     end
     @blockages = Blockage.where(created_at: start_time..end_time)
   end
