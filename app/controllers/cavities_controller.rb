@@ -56,6 +56,7 @@ class CavitiesController < ApplicationController
     @cavity.destroy
     update_blocked_damaged
     update_active_spares
+    @tool.update_available
     flash[:alert] = "Cavity deleted succesfully!"
     redirect_to tool_path(@tool)
   end
