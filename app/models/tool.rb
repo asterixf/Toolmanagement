@@ -31,8 +31,12 @@ class Tool < ApplicationRecord
   validate :layout_mime_type
 
   def update_available
-    result = (active * 100) / capacity.to_f
-    update(available: result.round(2)) unless result.nan?
+    if capacity === 0
+      update(available: nil)
+    else
+      result = (active * 100) / capacity.to_f
+      update(available: result.round(2))
+    end
   end
 
   private

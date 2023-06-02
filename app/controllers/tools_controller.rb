@@ -66,6 +66,7 @@ class ToolsController < ApplicationController
     authorize @tool
     if @tool.update(tool_params)
       @tool.update_available
+      @tool.update(last_updated_by:"#{current_user.id}-#{current_user.name} #{current_user.lastname}")
       redirect_to tool_path(@tool)
     else
       render :edit, status: :unprocessable_entity
