@@ -13,7 +13,9 @@ class DamageReportsController < ApplicationController
       start_time = today.beginning_of_day
       end_time = today.end_of_day
     end
-    @damage_reports = DamageReport.where(created_at: start_time..end_time)
+    start_time += 6.hours
+    end_time += 6.hours
+    @damage_reports = DamageReport.where(created_at: start_time..end_time).order(created_at: :asc)
   end
 
   def show
