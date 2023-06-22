@@ -88,18 +88,26 @@ class WashOrdersController < ApplicationController
   end
 
   def to_csv(wash_orders)
-    attribs = [:id, :created_at, :closed_at, :created_by, :time_formated, :tool_sap, :tool_alias]
+    attribs = [:id, :created_date, :created_time, :closed_date, :closed_time, :created_by, :time_formated, :tool_sap, :tool_alias, :tool_bu]
     if wash_orders && wash_orders.any?
       CSV.generate(headers: true) do |csv|
         csv << attribs
         wash_orders.each do |order|
           csv << attribs.map do |attr|
             case attr
-            when :created_at
-              order.created_at.in_time_zone('America/Mexico_City').strftime("%Y-%m-%d %H:%M:%S")
-            when :closed_at
+            when :created_date
+              order.created_at.in_time_zone('America/Mexico_City').strftime("%Y-%m-%d")
+            when :created_time
+              order.created_at.in_time_zone('America/Mexico_City').strftime("%H:%M:%S")
+            when :closed_date
               if order.closed_at.present?
-                order.closed_at.in_time_zone('America/Mexico_City').strftime("%Y-%m-%d %H:%M:%S")
+                order.closed_at.in_time_zone('America/Mexico_City').strftime("%Y-%m-%d")
+              else
+                ""
+              end
+            when :closed_time
+              if order.closed_at.present?
+                order.closed_at.in_time_zone('America/Mexico_City').strftime("%H:%M:%S")
               else
                 ""
               end
@@ -107,6 +115,8 @@ class WashOrdersController < ApplicationController
               order.tool.sap
             when :tool_alias
               order.tool.alias
+            when :tool_bu
+              order.tool.bu
             when :time_formated
               if order.time.present?
                 order.formatted_time
