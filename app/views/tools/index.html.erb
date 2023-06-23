@@ -58,7 +58,7 @@
     </div>
     <div class="d-flex justify-content-between mb-2">
       <h3 class="mb-0 align-self-end fw-bold">Availability <%= @average_availability.round(2) %>%</h3>
-      <%= link_to "Export Tools CSV", tools_path(format: :csv), class:"btn btn-primary btn-sm align-self-end" %>
+      <%= link_to "Export Tools CSV", tools_path(query: @query, format: :csv), class:"btn btn-primary btn-sm align-self-end" %>
     </div>
     <div class="scroll-container rounded-4 bg-light">
         <table class="table table-striped table-bordered table align-middle shadow-sm p-3 mb-5 bg-body-tertiary rounded centered-table">
