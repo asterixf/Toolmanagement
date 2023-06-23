@@ -2,13 +2,14 @@ class ToolsController < ApplicationController
   def index
     @tools = policy_scope(Tool)
     if params[:query].present?
-      @tools = Tool.search_by_params(params[:query]).order(location: :asc)
+      @query = params[:query]
+      @tools = Tool.search_by_params(@query).order(location: :asc)
     else
       @tools = Tool.all.order(location: :asc)
     end
     respond_to do |format|
       format.html
-      format.csv { send_data to_csv(Tool.all), filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
+      format.csv { send_data to_csv(@tools), filename: "tools-#{Time.now.strftime('%y%m%d')}.csv" }
     end
     @average_availability = Tool.all.average(:available)&.round(2) || 0
     @hv_availability = Tool.where(segment: "HV").average(:available)&.round(2) || 0
