@@ -4,10 +4,10 @@ class WashOrdersController < ApplicationController
   def index
     @wash_orders = policy_scope(WashOrder)
     if params[:start_date].present? && params[:end_date].present?
-      start_date = Date.parse(params[:start_date])
-      end_date = Date.parse(params[:end_date])
-      start_time = Time.new(start_date.year, start_date.month, start_date.day, 0, 0, 0, "+00:00")
-      end_time = Time.new(end_date.year, end_date.month, end_date.day, 23, 59, 59, "+00:00")
+      @start_date = Date.parse(params[:start_date])
+      @end_date = Date.parse(params[:end_date])
+      start_time = Time.new(@start_date.year, @start_date.month, @start_date.day, 0, 0, 0, "+00:00")
+      end_time = Time.new(@end_date.year, @end_date.month, @end_date.day, 23, 59, 59, "+00:00")
     else
       today = (Time.now - 6.hours).to_date
       start_time = today.beginning_of_day
@@ -18,7 +18,7 @@ class WashOrdersController < ApplicationController
     @wash_orders = WashOrder.where(created_at: start_time..end_time).order(created_at: :asc)
     respond_to do |format|
       format.html
-      format.csv { send_data to_csv(WashOrder.all), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
+      format.csv { send_data to_csv(@wash_orders), filename: "WO-#{Time.now.strftime('%y%m%d')}.csv" }
     end
   end
 
