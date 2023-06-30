@@ -88,7 +88,7 @@ class WashOrdersController < ApplicationController
   end
 
   def to_csv(wash_orders)
-    attribs = [:id, :created_date, :created_time, :closed_date, :closed_time, :created_by, :time_formated, :tool_sap, :tool_alias, :tool_bu]
+    attribs = [:id, :created_date, :created_time, :closed_date, :closed_time, :created_by, :time_formated, :tool_sap, :tool_alias, :tool_bu, :tech]
     if wash_orders && wash_orders.any?
       CSV.generate(headers: true) do |csv|
         csv << attribs
@@ -117,6 +117,8 @@ class WashOrdersController < ApplicationController
               order.tool.alias
             when :tool_bu
               order.tool.bu
+            when :tech
+              order.tool.technology
             when :time_formated
               if order.time.present?
                 order.formatted_time
