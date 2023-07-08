@@ -117,6 +117,18 @@
         </tr>
         <tr>
           <td class="fw-bold">
+           Manual process
+          </td>
+          <td>
+            <% if @tool.manual_process%>
+              <span class="bg-warning p-1 rounded">Required</span>
+            <% else %>
+              Not required
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td class="fw-bold">
            Segment
           </td>
           <td>

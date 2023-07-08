@@ -11,6 +11,7 @@
       collection: ['HV', 'MV', 'LV']%>
       <%= f.input :customer, required: true  %>
       <%= f.input :capacity, required: true%>
+      <%= f.input :manual_process, label:"Requires manual washing or disassembly" %>
       <%= f.input :layout, label:'New_file', as: :file , hint: 'PDF file'%>
       <div class="form-alert p-3 my-3">
         <p><strong>Blocked:</strong> <%= @tool.blocked %></p>
