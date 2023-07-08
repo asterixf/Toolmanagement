@@ -10,6 +10,7 @@
         collection: ['HV', 'MV', 'LV']%>
         <%= f.input :customer, required: true  %>
         <%= f.input :capacity, required: true, label:"Cavities Capacity"%>
+        <%= f.input :manual_process, label:"Requires manual washing or disassembly" %>
         <%= f.input :layout, as: :file , hint: 'PDF file'%>
         <%= f.button :submit, class:"btn btn-primary mb-3" %>
     <% end %>
