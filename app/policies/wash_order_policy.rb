@@ -25,4 +25,8 @@ class WashOrderPolicy < ApplicationPolicy
   def update?
     user.admin? || user.department == "Tooling"
   end
+
+  def manual_process?
+    return update?
+  end
 end

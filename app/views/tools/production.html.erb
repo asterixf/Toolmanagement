@@ -47,7 +47,7 @@
                 <% if tool.location === "washing" %>
                   <li class="list-group-item">
                       <strong>WO Comments:</strong>
-                      <%= tool.wash_orders.find_by(status: "open").comments %>
+                      <%= tool.open_wash_order.comments %>
                   </li>
                 <% end %>
               </ul>
@@ -55,7 +55,9 @@
           <div class="card-footer">
             <% if policy(WashOrder).create? %>
               <% if tool.wash_orders.any?{|order| order.status == "open"} %>
-                <%= link_to "update", edit_wash_order_path(tool.wash_orders.find_by(status: "open")), class:"btn btn-sm btn-warning fw-bold" %>
+                <% classes = "btn btn-sm btn-warning fw-bold"
+                classes += " disabled" if tool.open_wash_order.active_sub_process %>
+                <%= link_to "update", edit_wash_order_path(tool.open_wash_order), class:classes%>
               <% else %>
                 <%= link_to "start_wash", new_tool_wash_order_path(tool), class:"btn btn-sm btn-primary fw-bold" %>
               <% end %>
@@ -65,6 +67,11 @@
             <% end %>
             <% if policy(DamageReport).create? %>
               <%= link_to "Report_DMG", new_tool_damage_report_path(tool), class: "btn btn-sm btn-info fw-bold ms-auto" %>
+            <% end %>
+            <% if tool.open_orders_without_process_start? %>
+                <%= link_to "Start_Sub_process", manual_process_path(tool.open_wash_order), method: :patch, class:"btn btn-sm btn-success fw-bold" %>
+            <% elsif tool.open_orders_without_process_end? %>
+              <%= link_to "End_Sub_process", manual_process_path(tool.open_wash_order), method: :patch, class:"btn btn-sm btn-danger fw-bold" %>
             <% end %>
           </div>
         </div>

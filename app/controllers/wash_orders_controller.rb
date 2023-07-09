@@ -52,20 +52,35 @@ class WashOrdersController < ApplicationController
   def update
     @wash_order = WashOrder.find(params[:id])
     authorize @wash_order
-    if @wash_order.update(washorder_paramas)
+    if @wash_order.active_sub_process
+      flash[:alert] = "You can't edit an order with an active sub-process"
+      render :edit, status: :unprocessable_entity
+    elsif @wash_order.update(washorder_paramas)
       if @wash_order.status === "close"
         @wash_order.tool.update(location:"production")
         @wash_order.update(
           closed_by: "#{current_user.name} #{current_user.lastname}",
           closed_at: Time.current,
-          time: Time.current - @wash_order.created_at
+          time: @wash_order.total_time
         )
+        @wash_order.update(wash_time: @wash_order.manual_process_start ? @wash_order.wash_time_minus_manual_process : @wash_order.time)
       end
       redirect_to tools_production_path
       flash[:notice] = "Order updated succesfully!"
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def manual_process
+    @wash_order = WashOrder.find(params[:id])
+    authorize @wash_order
+    if @wash_order.manual_process_start.nil?
+      @wash_order.update(manual_process_start: Time.current)
+    else
+      @wash_order.update(manual_process_end: Time.current)
+    end
+    redirect_to tools_production_path
   end
 
   private
@@ -88,7 +103,7 @@ class WashOrdersController < ApplicationController
   end
 
   def to_csv(wash_orders)
-    attribs = [:id, :created_date, :created_time, :closed_date, :closed_time, :created_by, :time_formated, :tool_sap, :tool_alias, :tool_bu, :tech]
+    attribs = [:id, :created_date, :created_time, :closed_date, :closed_time, :created_by, :wash_time, :total_time, :tool_sap, :tool_alias, :tool_bu, :tech]
     if wash_orders && wash_orders.any?
       CSV.generate(headers: true) do |csv|
         csv << attribs
@@ -119,7 +134,13 @@ class WashOrdersController < ApplicationController
               order.tool.bu
             when :tech
               order.tool.technology
-            when :time_formated
+            when :wash_time
+              if order.wash_time.present?
+                order.formatted_wash_time
+              else
+                ""
+              end
+            when :total_time
               if order.time.present?
                 order.formatted_time
               else
