@@ -39,6 +39,23 @@ class Tool < ApplicationRecord
     end
   end
 
+  def open_orders_without_process_end?
+    wash_orders.any? { |order| order.status == "open" } &&
+      manual_process &&
+      wash_orders.find_by(status: "open")&.manual_process_start &&
+      wash_orders.find_by(status: "open")&.manual_process_end.nil?
+  end
+
+  def open_orders_without_process_start?
+    wash_orders.any? { |order| order.status == "open" } &&
+      manual_process &&
+      wash_orders.find_by(status: "open")&.manual_process_start.nil?
+  end
+
+  def open_wash_order
+    wash_orders.find_by(status: "open")
+  end
+
   private
 
   def layout_mime_type

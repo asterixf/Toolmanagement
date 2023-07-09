@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :cavities, only: [:edit, :update, :show, :destroy]
 
   resources :wash_orders, only: [:index, :show, :edit, :update]
+  get 'wash_orders/:id/manual_process', to: 'wash_orders#manual_process', as: 'manual_process'
 
   resources :damage_reports, only: [:index, :show, :edit, :update]
 
