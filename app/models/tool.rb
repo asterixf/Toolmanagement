@@ -56,6 +56,14 @@ class Tool < ApplicationRecord
     wash_orders.find_by(status: "open")
   end
 
+  def active_wash_order?
+    if wash_orders.where(status: "open").count == 0
+      return true
+    else
+      return false
+    end
+  end
+
   private
 
   def layout_mime_type

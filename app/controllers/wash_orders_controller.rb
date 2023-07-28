@@ -36,10 +36,15 @@ class WashOrdersController < ApplicationController
     @wash_order = WashOrder.new(washorder_paramas)
     authorize @wash_order
     set_wash_order_values
-    if @wash_order.save
-      @tool.update(location:"washing")
-      redirect_to tools_production_path
+    if @wash_order.tool.active_wash_order?
+      if @wash_order.save
+        @tool.update(location:"washing")
+        redirect_to tools_production_path
+      else
+        render :new, status: :unprocessable_entity
+      end
     else
+      flash[:alert] = "Tool has an open wash order"
       render :new, status: :unprocessable_entity
     end
   end
